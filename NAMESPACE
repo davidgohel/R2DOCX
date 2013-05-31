@@ -1,0 +1,4 @@
+import("methods", "rJava", "R2DOC")
+exportClasses("Docx")
+exportMethods("addPlot","addTOC","styles","setHeaderStyle","replaceText","writeDoc","addParagraph","addTable","addHeader")
+

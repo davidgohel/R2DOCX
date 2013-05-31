@@ -1,0 +1,10 @@
+Package: R2DOCX
+Type: Package
+Title: Create MS docx documents from R
+Version: 0.2
+Date: 2013-03-05
+Author: David Gohel <david.gohel@gmail.com>
+Maintainer: David Gohel <david.gohel@gmail.com>
+Description: Create MS DOCX documents from R.
+License: GPL-3
+Depends: R2DOC, rJava, methods
