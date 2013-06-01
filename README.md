@@ -10,10 +10,10 @@ Features
 Installation
 ------------
 From an R console:
-'
-devtools::install_github('R2DOC', 'davidgohel')
-devtools::install_github('R2DOCX', 'davidgohel')
-'
+
+  devtools::install_github('R2DOC', 'davidgohel')
+  devtools::install_github('R2DOCX', 'davidgohel')
+
 
 License
 -------
