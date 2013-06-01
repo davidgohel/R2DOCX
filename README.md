@@ -11,9 +11,15 @@ Installation
 ------------
 From an R console:
 
-  devtools::install_github('R2DOC', 'davidgohel')
-  devtools::install_github('R2DOCX', 'davidgohel')
+    devtools::install_github('R2DOC', 'davidgohel')
+    devtools::install_github('R2DOCX', 'davidgohel')
 
+Getting Started
+---------------
+
+    library(R2DOCX)
+    demo(R2DOCX) #if you don't have any docx reader, you should say 'n' at the end
+    # when asking if file is to be opened
 
 License
 -------
