@@ -1,6 +1,6 @@
 R2DOCX
 ======
-R2DOCX is a R package for creating Word docx files (Microsoft Open XML) files.
+R2DOCX is a R package for creating Word docx files (Microsoft Open XML).
 Features
 --------
 * Create docx files with only a few lines of R code. 
