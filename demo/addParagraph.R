@@ -35,7 +35,7 @@ if(file.exists( docx.file ))
 # create document
 doc <- new("Docx", title = "My example" )
 # simple paragraphs
-doc <- addParagraph( doc, value = "Hello!", "How are you today?", stylename = "Normal")
+doc <- addParagraph( doc, value = c("Hello!", "How are you today?"), stylename = "Normal")
 
 
 # define 2 paragraph of text to add later
