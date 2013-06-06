@@ -6,14 +6,15 @@
 ###############################################################################
 
 setMethod("addPlot", "Docx", function(doc, fun
-		, legend, stylename
+		, legend, stylename = "PlotReference"
 		, width = 7, height = 6
 		, pointsize = 12
 		, visible = T, ... ) {
-
-			# check style does exist
-			if( !is.element( stylename , styles( doc ) ) )
-				stop(paste("Style {", stylename, "} does not exists.", sep = "") )
+			if( !missing( legend) && legend != "" ){
+				# check style does exist
+				if( !is.element( stylename , styles( doc ) ) )
+					stop(paste("Style {", stylename, "} does not exists. Use styles() to list available styles.", sep = "") )
+			}
 			plotargs = list(...)
 
 			dirname = tempfile( )
@@ -36,7 +37,7 @@ setMethod("addPlot", "Docx", function(doc, fun
 				.jcall( doc@obj, "V", "addImage", i )
 
 			# Finally, add the legend of the Graph after the Drawing
-			addParagraph( doc, value = legend, par.style = stylename )
+			if( !missing( legend) && legend != "" ) addParagraph( doc, value = legend, stylename = stylename )
 			doc
 		})
 

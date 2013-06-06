@@ -16,5 +16,15 @@ setMethod("addTOC", "Docx", function(x, stylename, ... ) {
 			}
 			x
 	})
+setMethod("addPageBreak", "Docx", function( x ) {
+			.jcall( x@obj, "V", "addPageBreak" )
+			x
+		})
+
+setMethod("addLineBreak", "Docx", function( x ) {
+			.jcall( x@obj, "V", "addLineBreak" )
+			x
+		})
+
 
 

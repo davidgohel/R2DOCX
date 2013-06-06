@@ -11,10 +11,11 @@ Insert a plot into the \code{\linkS4class{Docx}} object.
 \arguments{
   \item{doc}{the \code{\linkS4class{Docx}} to use}
   \item{fun}{plot function}
-  \item{width}{plot width in inches.}
-  \item{height}{plot height in inches.}
-  \item{legend}{character string, legend to add below the plot}
-  \item{stylename}{name of the style to apply to the legend text}
+  \item{width}{plot width in inches (default value is 7).}
+  \item{height}{plot height in inches (default value is 6).}
+  \item{legend}{optional character string, legend to add below the plot}
+  \item{stylename}{name of the style to apply to the legend text 
+  (default value is "PlotReference" - a style available in the default base document.).}
   \item{...}{arguments for \code{fun}.}
 }
 \details{
@@ -26,43 +27,40 @@ If you want to add ggplot2 or lattice plot, use
 \code{print} function. See examples for more details.
 }
 \examples{
-require(ggplot2)
+docx.file = "Hello_Word.docx"
+require(R2DOCX)
 # Create a new document 
 doc <- new("Docx", title = "title" )
 # Add a base plot
 doc = addPlot( doc
 		, fun = plot
-		, width = 7, height = 6, legend="base plot" 
-		, stylename = "PlotReference"
 		, x = rnorm( 100 )
 		, y = rnorm (100 )
 		, main = "base plot main title"
 	)
-writeDoc( doc, "Hello_Word.docx" )
-
 
 ## Add a ggplot2
+\dontrun{
+require(ggplot2)
 # method 1 :
-doc <- new("Docx", title = "title" )
 doc = addPlot( doc
 		, function(){
 			print( qplot(Sepal.Length, Petal.Length, data = iris, color = Species, size = Petal.Width, alpha = I(0.7)) )
 		}
-		, width = 7, height = 6, legend="graph example" 
+		, width = 8, height = 7, legend="graph example" 
 		, stylename = "PlotReference"
 	)
-writeDoc( doc, "Hello_Word.docx" )
 
 # method 2 :
 myplot = qplot(Sepal.Length, Petal.Length, data = iris, color = Species, size = Petal.Width, alpha = I(0.7))
 doc = addPlot( doc
 		, print
-		, width = 7, height = 6, legend="graph example" 
+		, width = 8, height = 7, legend="graph example" 
 		, stylename = "PlotReference"
-		, x = myplot #this argument MUST be named, print is waiting arg 'x'
+		, x = myplot #this argument MUST be named, print is expecting argument 'x'
 	)
-\dontrun{
-writeDoc( doc, "Hello_Word.docx" )
+
+writeDoc( doc, docx.file )
 }
 }
 \keyword{methods}

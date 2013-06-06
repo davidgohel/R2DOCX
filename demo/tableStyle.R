@@ -24,7 +24,7 @@
 ###############################################################################
 
 require( R2DOCX )
-
+data( weights.summary )
 # Word document to write
 docx.file <- "document.docx"
 
@@ -38,44 +38,43 @@ doc <- new("Docx", title = "My example" )
 
 header.cellProperties = cellProperties( border.left.width = 0, border.right.width = 0
 		, border.bottom.width = 2, border.top.width = 0
-		, padding = 2 )
+		, padding = 5 )
 data.cellProperties = cellProperties( border.left.width = 0, border.right.width = 0
 		, border.bottom.width = 1, border.top.width = 0
-		, padding = 1 )
+		, padding = 3 )
 
-header.textProperties = textProperties( font.size = 12, color = "gray"
-		, font.weight = "bold" )
-data.textProperties = textProperties( font.size = 10 )
+header.textProperties = textProperties( font.size = 12, color = "#1B1BAA", font.weight = "bold" )
+data.textProperties = textProperties( font.size = 10, color = "#303030" )
 
-leftPar = parProperties( text.align = "left", padding.left = 4, padding.right = 4)
-rightPar = parProperties( text.align = "right", padding.left = 4, padding.right = 4)
-centerPar = parProperties( text.align = "center", padding.left = 4, padding.right = 4)
+leftPar = parProperties( text.align = "left" )
+rightPar = parProperties( text.align = "right" )
+centerPar = parProperties( text.align = "center" )
 
 my.formats = tableProperties( 
-		character.par = leftPar
-		, percent.par = rightPar
-		, double.par = rightPar
-		, integer.par = rightPar
-		, groupedheader.par = centerPar
-		, groupedheader.text = header.textProperties
+		character.par = leftPar, percent.par = rightPar
+		, double.par = rightPar, integer.par = rightPar
+		, groupedheader.par = centerPar, groupedheader.text = header.textProperties
 		, groupedheader.cell = header.cellProperties
-		, header.cell = header.cellProperties
-		, header.par = centerPar
+		, header.cell = header.cellProperties, header.par = centerPar
 		, header.text = header.textProperties
-		, double.cell = data.cellProperties
-		, integer.cell = data.cellProperties
-		, percent.cell = data.cellProperties
-		, character.cell = data.cellProperties
-		, character.text = data.textProperties
-		, double.text = data.textProperties
-		, percent.text = data.textProperties
-		, integer.text = data.textProperties
+		, data.cell = data.cellProperties, data.text = data.textProperties
+		, percent.addsymbol = " %"
+		, integer.digit = 1L
+		, fraction.double.digit = 3L
+		, fraction.percent.digit = 2L
 )
 
-doc <- addTable( doc, iris, formats = my.formats )
 
+
+
+doc <- new("Docx", title = "My example" )
+doc <- addTable( doc, weights.summary
+		, formats = my.formats
+		, col.types = list( "id" = "character", "avg.weight" = "double"
+				, "regularity" = "percent", "visit.n" = "integer"
+				, "last.day" = "date" ) 
+)
 writeDoc( doc, docx.file )
-
 
 if( interactive() ) {
 	out = readline( "Open the docx file (y/n)? " )

@@ -52,7 +52,7 @@ doc <- new("Docx", title = "title" )
 doc <- addParagraph(doc, "Hello Word!", "Normal");
 # writes document into file "Hello_Word.docx"
 
-writeDoc( itsDoc, "Hello_Word.docx" )
+writeDoc( doc, "Hello_Word.docx" )
 }
 \concept{Microsoft Word}
 \concept{docx}

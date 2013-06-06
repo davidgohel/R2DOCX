@@ -26,8 +26,9 @@ setMethod("initialize", "Docx", function(.Object, title, basefile) {
 	.Object@title = title
 	.Object@basefile = basefile
 	.Object@styles = .jcall( obj, "[S", "getStyleNames" )
-
+	
 	matchheaders = regexpr("^(Heading|Titre|Rubrik|Overskrift|berschrift)[1-9]{1}$", .Object@styles )
+	#	matchheaders = regexpr("^(?i)(heading|titre|rubrik|overskrift|otsikko|titolo|titulo|baslik|uberschrift|rubrik)[1-9]{1}$", .Object@styles )
 	if( any( matchheaders > 0 ) ){
 		.Object <- setHeaderStyle(.Object
 		, stylenames = sort( .Object@styles[ matchheaders > 0 ] ) )

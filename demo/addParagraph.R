@@ -34,21 +34,24 @@ if(file.exists( docx.file ))
 
 # create document
 doc <- new("Docx", title = "My example" )
+# simple paragraphs
+doc <- addParagraph( doc, value = "Hello!", "How are you today?", stylename = "Normal")
 
 
-x = "[animal] eats [food]."
-
+# define 2 paragraph of text to add later
+x = c( "[animal] eat [food].", "tigers eat [animal]." )
+# define styles that will be used for formating replacements texts
 repl.styles = list(
-		  animal= new ("textProperties", "font-size" = "12px", "font-family"="Courier New", "color"="red" )
-		, food= new ("textProperties", "font-size" = "12px", "font-family"="Courier New", "color"="blue" )
+		animal= textProperties( font.size = 12, font.family="Courier New", color="red" )
+		, food= textProperties( font.size = 12, font.family="Courier New", color="blue" )
 )
-repl = list( animal = "donkey" , food = "grass" )
+# define replacements texts
+repl = list( animal = "buffalos" , food = "grass" )
 
-doc <- addParagraph( doc, value = x, par.style = "Normal"
+doc <- addParagraph( doc, value = x, stylename = "Normal"
 		, replacements = repl
 		, replacement.styles = repl.styles
 )
-
 
 writeDoc( doc, docx.file )
 

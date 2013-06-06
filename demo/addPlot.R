@@ -24,7 +24,6 @@
 ###############################################################################
 
 require( R2DOCX )
-require( ggplot2 )
 
 # Word document to write
 docx.file <- "document.docx"
@@ -36,19 +35,14 @@ if(file.exists( docx.file ))
 # create document
 doc <- new("Docx", title = "My example" )
 
-
 doc = addPlot( doc
-		, function(){
-			print( qplot(Sepal.Length, Petal.Length, data = iris, color = Species, size = Petal.Width, alpha = I(0.7)) )
-		}
-		, width = 7, height = 6, legend="graph example" 
-		, stylename="Normal" 
-	)
-
-
+		, fun = plot
+		, x = rnorm( 100 )
+		, y = rnorm (100 )
+		, main = "base plot main title"
+)
 
 writeDoc( doc, docx.file )
-
 
 if( interactive() ) {
 	out = readline( "Open the docx file (y/n)? " )

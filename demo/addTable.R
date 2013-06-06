@@ -24,7 +24,9 @@
 ###############################################################################
 
 require( R2DOCX )
-require(lattice)
+
+data( measured.weights )
+data( weights.summary )
 
 # Word document to write
 docx.file <- "document.docx"
@@ -36,29 +38,29 @@ if(file.exists( docx.file ))
 # create document
 doc <- new("Docx", title = "My example" )
 
-doc <- addParagraph( doc, value = "iris dataset :", par.style = "Normal" )
+# add a title
+doc <- addHeader( doc, "Table example", 1 )
 
-doc <- addTable( doc, iris )
+# add the first 5 lines of measured.weights in the docx
+doc <- addTable( doc, head( measured.weights, n = 5 ) )
 
-doc <- addParagraph( doc, value = "another table :", par.style = "Normal" )
-data = barley[, c("variety", "site", "year", "yield" )]
-data$PC = runif( nrow( data ), 0, 1 )# create dummy percent
+# add another title
+doc <- addHeader( doc, "Another table example", 1 )
 
-
+# add and format weights.summary in the docx
 doc <- addTable( doc
-		, data
-		, header.labels = list("variety" = "Variety", "site" = "Site"
-				, "year" = "Year", "yield" = "Yield", "PC" = "Percent column")
-		, grouped.cols=list( "Types" = c( "variety", "site" )
-				, "year" = "year"
-				, "Mesures" = c("yield", "PC") )
-		, span.first.columns = 1
-		, col.types = list("variety" = "character", "site" = "character"
-				, "year" = "integer", "yield" = "double", "PC"="percent" ) 
-		, col.fontcolors = list( "PC" = ifelse( data$PC < 0.05 , "#FF0000", "#000000") )
+		, data = weights.summary
+		, header.labels = list("id" = "Subject Identifier", "avg.weight" = "Average Weight"
+				, "regularity" = "Regularity", "visit.n" = "Number of visits", "last.day" = "Last visit")
+		, grouped.cols=list( "id" = "id"
+				, "Summary" = c( "avg.weight",  "regularity", "visit.n", "last.day" ) )
+		, col.types = list( "id" = "character", "avg.weight" = "double"
+				, "regularity" = "percent", "visit.n" = "integer"
+				, "last.day" = "date" ) 
+		, col.fontcolors = list( "regularity" = ifelse( weights.summary$regularity < 0.5 , "gray", "blue") )
 )
 
-
+# write the docx onto the disk
 writeDoc( doc, docx.file )
 
 

@@ -9,32 +9,27 @@ Insert a paragraph of text into a \code{\linkS4class{Docx} object}.
 }
 
 \usage{
-  \S4method{addParagraph}{Docx, character, character, list, list}(x, value, par.style, replacements, replacement.styles)
+  \S4method{addParagraph}{Docx, character, character, list, list}(x, value, stylename, replacements, replacement.styles)
 }
 
 
 \arguments{
   \item{x}{the \code{\linkS4class{Docx}} to use}
-  \item{value}{a character (vector of length 1) containing text to add.}
-  \item{par.style}{value of the named style in the document.}
-  \item{replacements}{a named list whose elements define replacements values.}
-  \item{replacement.styles}{a named list specifying formats to apply to replacements.}
+  \item{value}{character vector containing texts to add.}
+  \item{stylename}{value of the named style in the docx document.}
+  \item{replacements}{optional, a named list whose elements define replacements values.}
+  \item{replacement.styles}{optional, a named list specifying formats to apply to replacements.}
 }
 
 \details{
 
 \itemize{
-\item \code{value} : {text to add, a character vector of length 1.\cr
+\item \code{value} : {text(s) to add, a character vector.\cr
 		Example : \code{value="Hello world"}\cr
-		If replacements have to be done, keywords that identify text to be replaced must be contains into square brackets [].\cr
+		If replacements have to be done, keywords that identify text to be replaced must be contained into square brackets [].\cr
 		Example : \code{value="At the [ALPHA] significance level, one [DECISION] the null hypothesis."}\cr
 		}
 
-\item \code{par.style} : {Stylename to use in the document, a character vector of length 1.\cr
-		Example : \code{par.style="Normal"}\cr
-		Stylename must exist in the base document provided as a template to the \code{\linkS4class{Docx}} object.\cr
-		Use \code{styles(Docx)} to see available styles in the base document template.\cr
-		}
 
 \item \code{replacements} : {a name list, names are keywords (of the \code{value}
 		, contained into square brackets) and values are replacements values\cr
@@ -46,7 +41,7 @@ Insert a paragraph of text into a \code{\linkS4class{Docx} object}.
 		, contained into square brackets) and values are replacements styles values\cr
 		Example : \code{value = "[animal] eats [food]."}\cr\code{, replacements = 
 		list( animal = "donkey" , food = "grass" )}\cr\code{, replacement.styles = 
-		list( animal= new ("textProperties", "color"="red" ) , food= new ("textProperties", "color"="blue" ) )
+		list( animal= textProperties(color="red" ) , food= textProperties(color="blue" ) )
 		}\cr
 		}
 
@@ -60,19 +55,24 @@ Insert a paragraph of text into a \code{\linkS4class{Docx} object}.
 \examples{
 doc <- new("Docx", title = "My example" )
 
-x = "[animal] eats [food]."
+doc <- addParagraph( doc, value = "Hello", stylename = "Normal")
+
+
+
+
+x = c( "[animal] eat [food].", "tigers eat [animal]." )
 
 repl.styles = list(
-		  animal= new ("textProperties", "font-size" = "12px", "font-family"="Courier New", "color"="red" )
-		, food= new ("textProperties", "font-size" = "12px", "font-family"="Courier New", "color"="blue" )
+		  animal= textProperties( font.size = 12, font.family="Courier New", color="red" )
+		, food= textProperties( font.size = 12, font.family="Courier New", color="blue" )
 )
-repl = list( animal = "donkey" , food = "grass" )
+repl = list( animal = "buffalos" , food = "grass" )
 
-doc <- addParagraph( doc, value = x, par.style = "Normal"
+doc <- addParagraph( doc, value = x, stylename = "Normal"
 		, replacements = repl
 		, replacement.styles = repl.styles
 )
-
+\dontrun{
 writeDoc( doc, "Paragraph_example.docx" )
-
+}
 }

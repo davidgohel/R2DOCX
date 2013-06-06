@@ -51,11 +51,13 @@ doc <- addTOC(doc)
 
 doc <- addHeader(doc, "Title 1", 1);
 doc <- addHeader(doc, "Title 1.1", 2);
-doc <- addHeader(doc, "Title 1.1.1", 3);
-doc <- addHeader(doc, "Title 1.1.1.1", 4);
+doc = addPageBreak( doc )
+doc <- addHeader(doc, "Title 1.2", 2);
+doc = addPageBreak( doc )
+doc <- addHeader(doc, "Title 1.2.1", 3);
 
-doc <- addParagraph( doc, value = "Normal text", par.style = "Normal" )
-doc <- addParagraph( doc, value = "Citation text", par.style = "Citation" )
+doc <- addParagraph( doc, value = "Normal text", stylename = "Normal" )
+doc <- addParagraph( doc, value = "Citation text", stylename = "Citation" )
 writeDoc( doc, docx.file )
 
 
@@ -63,3 +65,4 @@ if( interactive() ) {
 	out = readline( "Open the docx file (y/n)? " )
 	if( out == "y" ) browseURL( file.path(getwd(), docx.file ) )
 }
+

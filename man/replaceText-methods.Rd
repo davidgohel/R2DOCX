@@ -24,7 +24,7 @@ any element insertion when the doc is still light in memory.
 \examples{
 # first we need to create a doc where we put texts to replace later.
 doc <- new("Docx", title = "My example" )
-doc <- addParagraph( doc, value = "donkeys eats grass", par.style = "Normal" )
+doc <- addParagraph( doc, value = "donkeys eats grass", stylename = "Normal" )
 writeDoc( doc, "template.docx" )
 
 # now we will read the "template.docx" and replace 'donkeys' by 'cows'

@@ -19,7 +19,7 @@ Insert a table into a \code{\linkS4class{Docx} object}.
   \item{formats}{a \code{\linkS4class{tableProperties} object} that specify styles to use to format the table.}
   \item{header.labels}{a named list whose elements define labels to display in table headers instead of colnames.}
   \item{grouped.cols}{a named list whose elements define which columns are to be grouped in an upper header row (grouped header).}
-  \item{span.first.columns}{Specify the number of columns where row merging is to be done.}
+  \item{span.columns}{a character vector of columns names where row merging is to be done.}
   \item{col.types}{Defines the formating style of columns}
   \item{col.colors}{Defines the background color of cells}
   \item{col.fontcolors}{Defines the font color of cells}
@@ -27,15 +27,17 @@ Insert a table into a \code{\linkS4class{Docx} object}.
 
 \details{
 \preformatted{
-    -------------------------------------------
-      GROUPED HEADER 1  |   GROUPED HEADER 1  |
-    -------------------------------------------
-    HEADER 1 | HEADER 2 | HEADER 3 | HEADER 4 |
-    -------------------------------------------
-    data[1,1]| data[1,2]| data[1,3]| data[1,2]|
-    data[2,1]| data[2,2]| data[2,3]| data[2,2]|
-          ...|       ...|       ...|       ...|
-    -------------------------------------------
+--------------------+---------------------+
+  GROUPED HEADER 1  |   GROUPED HEADER 1  |
+---------+----------+----------+----------+
+HEADER 1 | HEADER 2 | HEADER 3 | HEADER 4 |
+---------+----------+----------+----------+
+data[1,1]| data[1,2]| data[1,3]| data[1,2]|
+---------+----------+----------+----------+
+data[2,1]| data[2,2]| data[2,3]| data[2,2]|
+---------+----------+----------+----------+
+      ...|       ...|       ...|       ...|
+---------+----------+----------+----------+
 }
 
 
@@ -61,12 +63,12 @@ Insert a table into a \code{\linkS4class{Docx} object}.
 	}
 
 
-\item \code{span.first.columns} : {an integer 
-		specifying number of columns where row merging should 
+\item \code{span.columns} : {a character vector  
+		specifying columns names where row merging should 
 		be done (only if data[p,j]==data[p-1,j] )\cr
-		Example : \code{span.first.columns = 2} mean to merge 
-		identical values for the first 2 columns of the table.\cr
-		Default is 0. Value must be less than the number of data columns.
+		Example : \code{data = iris, span.columns = "Species"} mean to merge 
+		identical values for the column "Species" of the iris dataset.\cr
+		Default is character(0)
 		}
 
 
@@ -103,31 +105,43 @@ Insert a table into a \code{\linkS4class{Docx} object}.
 
 
 \examples{
-require(lattice)
+data( measured.weights )
+data( weights.summary )
 
-# simple example
+# Word document to write
+docx.file <- "document.docx"
+
+# create document
 doc <- new("Docx", title = "My example" )
-doc <- addTable( doc, iris )
-writeDoc( doc, "table_example.docx" )
+
+# add a title
+doc <- addHeader( doc, "Table example", 1 )
+
+# add the first 5 lines of measured.weights in the docx
+doc <- addTable( doc, head( measured.weights, n = 5 ) )
+
+# demo span.columns
+doc <- addHeader( doc, "Another table example", 1 )
+doc <- addTable( doc, iris[ 46:55,], span.columns = "Species" )
 
 
-# more sophisticated example
-data = barley[, c("variety", "site", "year", "yield" )]
-data$PC = runif( nrow( data ), 0, 1 )# create dummy percent
+# add another title
+doc <- addHeader( doc, "And a last one", 1 )
 
-doc <- new("Docx", title = "My example" )
+# add and format weights.summary in the docx
 doc <- addTable( doc
-	, data
-	, header.labels = list("variety" = "Variety", "site" = "Site"
-		, "year" = "Year", "yield" = "Yield", "PC" = "Percent column")
-	, grouped.cols=list( "Types" = c( "variety", "site" )
-		, "year" = "year"
-		, "Mesures" = c("yield", "PC") )
-	, span.first.columns = 1
-	, col.types = list("variety" = "character", "site" = "character"
-		, "year" = "integer", "yield" = "double", "PC"="percent" ) 
-	, col.fontcolors = list( "PC" = ifelse( data$PC < 0.05 , "#FF0000", "#000000") )
+		, data = weights.summary
+		, header.labels = list("id" = "Subject Identifier", "avg.weight" = "Average Weight"
+				, "regularity" = "Regularity", "visit.n" = "Number of visits", "last.day" = "Last visit")
+		, grouped.cols=list( "id" = "id"
+				, "Summary" = c( "avg.weight",  "regularity", "visit.n", "last.day" ) )
+		, col.types = list( "id" = "character", "avg.weight" = "double"
+				, "regularity" = "percent", "visit.n" = "integer"
+				, "last.day" = "date" ) 
+		, col.fontcolors = list( "regularity" = ifelse( weights.summary$regularity < 0.5 , "gray", "blue") )
 )
-writeDoc( doc, "another_table_example.docx" )
+
+# write the docx onto the disk
+writeDoc( doc, docx.file )
 
 }

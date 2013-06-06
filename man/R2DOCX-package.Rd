@@ -18,8 +18,8 @@ Enable R to add content into a Word 2007 document - available elements are:
 \tabular{ll}{
 Package: \tab R2DOCX\cr
 Type: \tab Package\cr
-Version: \tab 0.2\cr
-Date: \tab 2013-03-31\cr
+Version: \tab 0.3\cr
+Date: \tab 2013-06-06\cr
 License: \tab GPL-3
 }
 

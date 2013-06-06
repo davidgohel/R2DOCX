@@ -36,7 +36,7 @@ if(file.exists( docx.file ))
 
 # create document
 doc <- new("Docx", title = "My example" )
-doc <- addParagraph( doc, value = "donkeys eats grass", par.style = "Normal" )
+doc <- addParagraph( doc, value = "donkeys eats grass", stylename = "Normal" )
 writeDoc( doc, docx.file )
 
 anotherdoc <- new("Docx", title = "My example", basefile = docx.file )

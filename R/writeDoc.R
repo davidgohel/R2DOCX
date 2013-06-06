@@ -6,6 +6,12 @@
 ###############################################################################
 
 setMethod("writeDoc", "Docx", function(x, file, ...) {
+			if( !tryCatch( {
+					cat("", file = file)
+					T
+					}, error = function( e ) F, warning = function ( e ) F , finally = T) )
+				stop("writeDoc: Cannot write to ", file)
+			
 			.jcall( x@obj , "V", "writeDocxToStream", file )
 		})
 

@@ -6,7 +6,7 @@
 ###############################################################################
 
 setMethod("styles", "Docx", function( x, ... ) {
-			x@styles
+			.jcall( x@obj, "[S", "getStyleNames" )
 		})
 
 

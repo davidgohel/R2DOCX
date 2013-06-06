@@ -16,6 +16,7 @@ Get styles names that exist into the template (base document).
 It return existing styles in the base document used as a template.\cr
 }
 \examples{
-
+doc = new( "Docx" , "example")
+styles(doc)
 }
 \keyword{methods}

@@ -17,3 +17,9 @@ if(!isGeneric("replaceText"))
 if(!isGeneric("addTOC"))
 	setGeneric("addTOC", function(x, ...) standardGeneric("addTOC"));
 
+if(!isGeneric("addPageBreak"))
+	setGeneric("addPageBreak", function(x, ...) standardGeneric("addPageBreak"));
+
+if(!isGeneric("addLineBreak"))
+	setGeneric("addLineBreak", function(x, ...) standardGeneric("addLineBreak"));
+

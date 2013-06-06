@@ -13,10 +13,14 @@
 
 
 .jinitialize.TableFormat = function( x ){
-		obj = .jnew("com/lysis/docx4r/format/TableFormat", "%", 2L, 2L, 2L, "YYYY-mm-dd", "HH:MM", "YYYY-mm-dd HH:MM" )
-		
+	
+		obj = .jnew("com/lysis/docx4r/format/TableFormat", x@percent.addsymbol
+			, x@integer.digit, x@fraction.double.digit, x@fraction.percent.digit
+			, "YYYY-mm-dd", "HH:MM", "YYYY-mm-dd HH:MM" )
+
 		rootnames = c("header", "groupedheader", "double", "integer", "percent", "character", "date", "datetime")
 		for( what in rootnames ){
+			#TODO: OMG, change that code
 			jwhatmethod = paste( casefold( substring(what , 1, 1 ),  upper = T ), casefold( substring(what , 2, nchar(what) ),  upper = F ), sep = "" )
 			jwhatmethod = paste( "set", jwhatmethod, "Text", sep = "" )
 			rwhatobject = paste( what, ".text", sep = "" )
