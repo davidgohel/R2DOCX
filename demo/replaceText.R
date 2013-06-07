@@ -27,25 +27,21 @@ require( R2DOCX )
 
 # Word document 1 to write
 docx.file <- "document.docx"
-# Word document 2 to write
-docx.file2 <- "document2.docx"
 
 # Remove file if it already exists
 if(file.exists( docx.file )) 
 	file.remove( docx.file )
 
 # create document
-doc <- new("Docx", title = "My example" )
-doc <- addParagraph( doc, value = "donkeys eats grass", stylename = "Normal" )
+doc <- new("Docx", title = "My example" 
+		, basefile = file.path( find.package("R2DOCX"), "templates/TEMPLATE_01.docx", fsep = "/" )
+)
+doc <- replaceText( doc, pattern = "AUTHOR", replacement = "John Doe" )
+doc <- replaceText( doc, pattern = "DATE", replacement = date() )
+
 writeDoc( doc, docx.file )
-
-anotherdoc <- new("Docx", title = "My example", basefile = docx.file )
-anotherdoc <- replaceText( anotherdoc, "donkeys", "cows")
-
-writeDoc( anotherdoc, docx.file2 )
-
 
 if( interactive() ) {
 	out = readline( "Open the docx file (y/n)? " )
-	if( out == "y" ) browseURL( file.path(getwd(), docx.file2 ) )
+	if( out == "y" ) browseURL( file.path(getwd(), docx.file ) )
 }
