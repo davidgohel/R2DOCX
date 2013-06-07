@@ -29,11 +29,10 @@ Creating Microsoft Word documents is easy and can be done in few lines of R code
     # add into doc first 10 lines of iris
     doc = addTable( doc, iris[1:10,] )
     # add text with stylename ‘Normal’ into doc 
-    doc <- addParagraph( doc, value = "Hello World!", par.style = "Normal" )
+    doc <- addParagraph( doc, value = "Hello World!", stylename = "Normal" )
     # add a plot into doc 
     doc = addPlot( doc, function() plot( rnorm(10), rnorm(10) )
-        , width = 10, height = 8, legend="graph example" 
-        , stylename="PlotReference"
+        , width = 10, height = 8
     )
     # write the doc 
     writeDoc( doc, docx.file )
@@ -57,6 +56,8 @@ To add R outputs (or replace text) in a docx document, use one of these function
 * 'addTable' for adding tables.
 * 'addHeader' for adding headers.
 * 'addTOC' for adding tables of contents.
+* 'addPageBreak' for adding a page break.
+* 'addLineBreak' for adding a line break.
 * 'replaceText' for text replacement.
 
 To write the docx document on to the disk:
