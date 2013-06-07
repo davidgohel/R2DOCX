@@ -42,7 +42,10 @@ doc <- new("Docx", title = "My example" )
 doc <- addHeader( doc, "Table example", 1 )
 
 # add the first 5 lines of measured.weights in the docx
-doc <- addTable( doc, head( measured.weights, n = 5 ) )
+doc <- addTable( doc
+	, head( measured.weights, n = 5 )
+	, span.columns = c( "id" ) 
+	)
 
 # add another title
 doc <- addHeader( doc, "Another table example", 1 )
