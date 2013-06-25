@@ -9,7 +9,7 @@ Features
 
 Installation
 ------------
-From an R console:
+From an R console (R >= 3.0):
 
     devtools::install_github('R2DOC', 'davidgohel')
     devtools::install_github('R2DOCX', 'davidgohel')
@@ -65,7 +65,7 @@ To write the docx document on to the disk:
     writeDoc( doc, "my_example.docx" )
 
 ### Note
-If you can this error:
+If you see that error:
 
     Error in addHeader(...
         You must defined header styles via setHeaderStyle first.
