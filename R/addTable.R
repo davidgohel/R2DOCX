@@ -168,7 +168,19 @@ setMethod("addTable", "Docx", function(x
 			}
 			
 			.jcall( obj , "V", "setMergeableCols", .jarray( args$span.columns ) )
-			
+			for(j in args$span.columns ){
+				 instructions = list()
+				 current.col = args$data[, j]
+				 groups = cumsum( c(TRUE, current.col[-length(current.col)] != current.col[-1] ) )
+				 groups.counts = tapply( groups, groups, length )
+				 for(i in 1:length( groups.counts )){
+				   if( groups.counts[i] == 1 ) instructions[[i]] = 0
+				   else {
+				     instructions[[i]] = c(1 , rep(2, groups.counts[i]-1 ) )
+				   }
+				 }
+				.jcall( obj , "V", "setMergeableCols", j, .jarray( as.integer( unlist(instructions) ) ) )
+			}
 			.jcall( x@obj, "V", "add", obj )
 			x
 		})

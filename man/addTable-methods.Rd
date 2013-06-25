@@ -9,7 +9,7 @@ Insert a table into a \code{\linkS4class{Docx} object}.
 }
 
 \usage{
-  \S4method{addTable}{Docx, data.frame, tableProperties, list, list, integer, character, list, list}(x, data, formats, header.labels, grouped.cols, span.first.columns=0, col.types, col.colors, col.fontcolors)
+  \S4method{addTable}{Docx, data.frame, tableProperties, list, list, integer, character, list, list}(x, data, formats, header.labels, grouped.cols, span.columns=character(0), col.types, col.colors, col.fontcolors)
 }
 
 
