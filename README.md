@@ -16,11 +16,10 @@ From an R console (R >= 3.0):
 
 **Mac users**
 
-    Sys.setenv(NOAWT=1) #prevents usage of awt.[Ref][1]
+    Sys.setenv(NOAWT=1) #prevents usage of awt.[http://cran.r-project.org/doc/manuals/r-devel/R-admin.html#Java-_0028OS-X_0029]
     devtools::install_github('R2DOC', 'davidgohel')
     devtools::install_github('R2DOCX', 'davidgohel')
 
-[1]: http://cran.r-project.org/doc/manuals/r-devel/R-admin.html#Java-_0028OS-X_0029       "ref"
 	
 Getting Started
 ---------------
