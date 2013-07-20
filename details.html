@@ -604,17 +604,8 @@
 					A paragraph in the template document can only contain one bookmark. Function <code>addParagraph</code> should be used if you want to replace multiple values in paragraphs. 
 					</p>
 					<h2>Complete example</H2>
-					<P>We are using that template file <a href="docx/ttest_example.docx">ttest_example.docx</a></P>
 					<P>We are expecting the following output file <a href="docx/document.docx">document.docx</a></P>
 <pre>
-<span class="comment"># do calculations...</span>
-<span class="symbol">data</span> <span class="assignement">=</span> <span class="functioncall">data.frame</span><span class="keyword">(</span> <span class="argument">X</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">:</span><span class="number">10</span><span class="keyword">,</span> <span class="argument">Y</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">:</span><span class="number">10</span> <span class="keyword">+</span> <span class="keyword">(</span><span class="functioncall">rnorm</span><span class="keyword">(</span><span class="number">10</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">)</span>
-<span class="symbol">x</span> <span class="assignement">=</span> <span class="functioncall">t.test</span><span class="keyword">(</span> <span class="symbol">data</span><span class="keyword">$</span><span class="symbol">X</span><span class="keyword">,</span> <span class="symbol">data</span><span class="keyword">$</span><span class="symbol">Y</span> <span class="keyword">)</span>
-
-<span class="symbol">conf.int</span> <span class="assignement">=</span> <span class="functioncall">data.frame</span><span class="keyword">(</span> <span class="argument">Name</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"lower"</span><span class="keyword">,</span> <span class="string">"upper"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">Value</span> <span class="argument">=</span> <span class="symbol">x</span><span class="keyword">$</span><span class="symbol">conf.int</span><span class="keyword">,</span> <span class="argument">stringsAsFactors</span> <span class="argument">=</span> <span class="symbol">F</span> <span class="keyword">)</span>
-
-
-
 <span class="functioncall">require</span><span class="keyword">(</span> <span class="symbol">R2DOCX</span> <span class="keyword">)</span>
 
 <span class="comment"># Word document to write</span>
@@ -625,7 +616,7 @@
         <span class="functioncall">file.remove</span><span class="keyword">(</span> <span class="symbol">docx.file</span> <span class="keyword">)</span>
 
 <span class="comment"># Word document to use as base document or a template</span>
-<span class="symbol">template.file</span> <span class="assignement">=</span> <span class="functioncall">file.path</span><span class="keyword">(</span> <span class="functioncall">find.package</span><span class="keyword">(</span><span class="string">"R2DOCX"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="string">"examples/ttest_example.docx"</span><span class="keyword">,</span> <span class="argument">fsep</span> <span class="argument">=</span> <span class="string">"/"</span> <span class="keyword">)</span>
+<span class="symbol">template.file</span> <span class="assignement">=</span> <span class="functioncall">file.path</span><span class="keyword">(</span> <span class="functioncall">find.package</span><span class="keyword">(</span><span class="string">"R2DOCX"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="string">"templates/bookmark_example.docx"</span><span class="keyword">,</span> <span class="argument">fsep</span> <span class="argument">=</span> <span class="string">"/"</span> <span class="keyword">)</span>
 
 <span class="comment"># create document</span>
 <span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span><span class="keyword">,</span> <span class="argument">basefile</span> <span class="argument">=</span> <span class="symbol">template.file</span> <span class="keyword">)</span>
@@ -645,32 +636,8 @@
 
 <span class="comment"># replace bookmarks 'DATA' and 'CONFINT' located in 'ttest_example.docx' by data.frame objects 'data' and 'conf.int'</span>
 <span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span>
-                <span class="keyword">,</span> <span class="symbol">data</span>
+                <span class="keyword">,</span> <span class="symbol">iris</span><span class="keyword">[</span><span class="number">5</span><span class="keyword">:</span><span class="number">10</span><span class="keyword">,</span><span class="keyword">]</span>
                 <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"DATA"</span> <span class="keyword">)</span>
-<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span>
-                <span class="keyword">,</span> <span class="symbol">conf.int</span>
-                <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"CONFINT"</span> <span class="keyword">)</span>
-
-
-
-<span class="comment">## replace bookmark 'STATS' by a Paragraph composed of different texts, with different colors and fonts</span>
-<span class="symbol">val</span> <span class="assignement">=</span> <span class="string">"T-value: [tvalue], DF: [DF], P-Value: [pvalue]"</span>
-
-<span class="symbol">repl.styles</span> <span class="assignement">=</span> <span class="functioncall">list</span><span class="keyword">(</span>
-                <span class="argument">tvalue</span> <span class="argument">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">font.size</span> <span class="argument">=</span> <span class="number">12</span><span class="keyword">,</span> <span class="argument">font.family</span><span class="argument">=</span><span class="string">"Courier New"</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"red"</span> <span class="keyword">)</span>
-                <span class="keyword">,</span> <span class="argument">DF</span><span class="argument">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">font.size</span> <span class="argument">=</span> <span class="number">12</span><span class="keyword">,</span> <span class="argument">font.family</span><span class="argument">=</span><span class="string">"Courier New"</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span> <span class="keyword">)</span>
-                <span class="keyword">,</span> <span class="argument">pvalue</span> <span class="argument">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">font.size</span> <span class="argument">=</span> <span class="number">12</span><span class="keyword">,</span> <span class="argument">font.family</span><span class="argument">=</span><span class="string">"Courier New"</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span> <span class="keyword">)</span>
-<span class="keyword">)</span>
-<span class="symbol">repl</span> <span class="assignement">=</span> <span class="functioncall">list</span><span class="keyword">(</span> <span class="argument">tvalue</span> <span class="argument">=</span> <span class="functioncall">sprintf</span><span class="keyword">(</span><span class="string">"%.3f"</span><span class="keyword">,</span> <span class="symbol">x</span><span class="keyword">$</span><span class="symbol">statistic</span><span class="keyword">)</span>
-                <span class="keyword">,</span> <span class="argument">DF</span> <span class="argument">=</span> <span class="functioncall">sprintf</span><span class="keyword">(</span><span class="string">"%.0f"</span><span class="keyword">,</span> <span class="symbol">x</span><span class="keyword">$</span><span class="symbol">parameter</span><span class="keyword">)</span>
-                <span class="keyword">,</span> <span class="argument">pvalue</span> <span class="argument">=</span> <span class="functioncall">sprintf</span><span class="keyword">(</span><span class="string">"%.3f"</span><span class="keyword">,</span> <span class="symbol">x</span><span class="keyword">$</span><span class="symbol">p.value</span><span class="keyword">)</span> <span class="keyword">)</span>
-
-<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span>
-                <span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="symbol">val</span>
-                <span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"Normal"</span>
-                <span class="keyword">,</span> <span class="argument">replacements</span> <span class="argument">=</span> <span class="symbol">repl</span>
-                <span class="keyword">,</span> <span class="argument">replacement.styles</span> <span class="argument">=</span> <span class="symbol">repl.styles</span>
-                <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"STATS"</span> <span class="keyword">)</span>
 
 
 <span class="comment">## replace bookmark 'PLOT' by a plot</span>
@@ -680,6 +647,16 @@
                 <span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="functioncall">rnorm</span> <span class="keyword">(</span><span class="number">100</span> <span class="keyword">)</span>
                 <span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"base plot main title"</span>
                 <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"PLOT"</span><span class="keyword">)</span>
+
+
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"Header 1"</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"NAMESTYLE"</span><span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"COLNAME1"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"Header 2"</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"NAMESTYLE"</span><span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"COLNAME2"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"Header 3"</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"NAMESTYLE"</span><span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"COLNAME3"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"Row name 1"</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"NAMESTYLE"</span><span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"ROWNAME1"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"Row name 2"</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"NAMESTYLE"</span><span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"ROWNAME2"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"Hello World!"</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"DATASTYLE"</span><span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"ANYDATA"</span> <span class="keyword">)</span>
+
+
 
 <span class="functioncall">writeDoc</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="symbol">docx.file</span> <span class="keyword">)</span>
 
