@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html charset=UTF-8">
+    <title>R2DOCX Documentation</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="css/highlight.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li class="navmenu"><a class="dropdown-toggle" href="index.html">Home</a></li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="container">
+	<div class="row">
+		<div id="navbar" class="span3 bs-docs-sidebar">
+			<ul class="nav nav-list bs-docs-sidenav">
+				<li><a href="#features"><i class="icon-chevron-right"></i>Features</a></li>
+				<li><a href="#installation"><i class="icon-chevron-right"></i>Installation</a></li>
+				<li><a href="#gettingstarted"><i class="icon-chevron-right"></i>Getting Started</a></li>
+
+			</ul>
+		</div>
+		<div class="span9">
+			<section id="features">
+				<div class="page-header">
+					<h2>Features</h2>
+					
+					<ul>
+					<li>Create docx files with only a few lines of R code. </li>
+					<li>Add tables, plots, texts or tables of contents into a word document.</li>
+					<li>R functions are available for customizing formatting properties of R output.</li>
+					</ul>
+				</div>
+			</section>
+			<section id="installation">
+				<div class="page-header">
+					<h2>Installation</h2>
+					
+					<p>From an R console (R &gt;= 3.0):</p>
+					
+<pre>
+<span class="functioncall">install.packages</span><span class="keyword">(</span><span class="string">"devtools"</span><span class="keyword">)</span>
+<span class="package">devtools</span><span class="keyword">::</span><span class="functioncall">install_github</span><span class="keyword">(</span><span class="string">'R2DOC'</span><span class="keyword">,</span> <span class="string">'davidgohel'</span><span class="keyword">)</span>
+<span class="package">devtools</span><span class="keyword">::</span><span class="functioncall">install_github</span><span class="keyword">(</span><span class="string">'R2DOCX'</span><span class="keyword">,</span> <span class="string">'davidgohel'</span><span class="keyword">)</span>
+</pre>
+					
+					<p><strong>Mac users</strong></p>
+					
+<pre>
+<span class="functioncall">Sys.setenv</span><span class="keyword">(</span><span class="argument">NOAWT</span><span class="argument">=</span><span class="number">1</span><span class="keyword">)</span> <span class="comment">#prevents usage of awt.[http://cran.r-project.org/doc/manuals/r-devel/R-admin.html#Java-_0028OS-X_0029]</span>
+<span class="functioncall">install.packages</span><span class="keyword">(</span><span class="string">"devtools"</span><span class="keyword">)</span>
+<span class="package">devtools</span><span class="keyword">::</span><span class="functioncall">install_github</span><span class="keyword">(</span><span class="string">'R2DOC'</span><span class="keyword">,</span> <span class="string">'davidgohel'</span><span class="keyword">)</span>
+<span class="package">devtools</span><span class="keyword">::</span><span class="functioncall">install_github</span><span class="keyword">(</span><span class="string">'R2DOCX'</span><span class="keyword">,</span> <span class="string">'davidgohel'</span><span class="keyword">)</span>
+</pre>
+					
+					<p><strong>Dependencies</strong></p>
+					
+					<pre>
+R packages : rJava
+Java (it has been tested with java version &gt;= 1.6)
+					</pre>
+				</div>
+			</section>
+
+			<section id="gettingstarted">
+				<div class="page-header">
+					<h2>Getting Started</h2>
+					<p>Creating Microsoft Word documents is easy and can be done in few lines of R code. Below a commented R script:</p>
+
+<pre>
+<span class="comment"># Here we define word document filename to write</span>
+<span class="symbol">docx.file</span> <span class="assignement">=</span> <span class="string">"document.docx"</span>
+<span class="comment"># Creation of doc, a Docx object</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span> <span class="keyword">)</span>
+<span class="comment"># add into doc first 10 lines of iris</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="symbol">iris</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">10</span><span class="keyword">,</span><span class="keyword">]</span> <span class="keyword">)</span>
+<span class="comment"># add text with stylename "Normal" into doc </span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="string">"Hello World!"</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"Normal"</span> <span class="keyword">)</span>
+<span class="comment"># add a plot into doc </span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="keyword">function</span><span class="keyword">(</span><span class="keyword">)</span> <span class="functioncall">plot</span><span class="keyword">(</span> <span class="functioncall">rnorm</span><span class="keyword">(</span><span class="number">10</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">rnorm</span><span class="keyword">(</span><span class="number">10</span><span class="keyword">)</span> <span class="keyword">)</span>
+<span class="keyword">,</span> <span class="argument">width</span> <span class="argument">=</span> <span class="number">10</span><span class="keyword">,</span> <span class="argument">height</span> <span class="argument">=</span> <span class="number">8</span>
+<span class="keyword">)</span>
+<span class="comment"># write the doc </span>
+<span class="functioncall">writeDoc</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="symbol">docx.file</span> <span class="keyword">)</span>
+</pre>
+					
+					
+
+					<p>When creating a Docx object, a base file is used. This file is the original docx document 
+					that will be completed with R ouputs. This file will be copied "in memory". </p>
+					
+					<p>Available styles will be those available in the base file. Tables and paragraphs formats 
+					can be customize with dedicated functions.</p>
+					
+					<p>To create a docx document from R, use:</p>
+					
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span> <span class="keyword">)</span>
+</pre>
+					
+					<p>To add R outputs in a docx document, use one of these functions:</p>
+					
+					<ul>
+						<li><code>addPlot</code> for adding plots.</li>
+						<li><code>addParagraph</code> for adding paragraphs of text.</li>
+						<li><code>addTable</code> for adding tables.</li>
+						<li><code>addHeader</code> for adding headers.</li>
+						<li><code>addTOC</code> for adding tables of contents.</li>
+						<li><code>addPageBreak</code> for adding a page break.</li>
+						<li><code>addLineBreak</code> for adding a line break.</li>
+						<li><code>replaceText</code> for text replacement.</li>
+					</ul>
+					
+					<p>To write the docx document on to the disk:</p>
+					
+<pre>
+<span class="functioncall">writeDoc</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"my_example.docx"</span> <span class="keyword">)</span>
+</pre>
+
+				</div>
+			</section>
+
+
+		</div>
+	
+	</div><!-- /.row -->
+
+</div><!-- /.container -->
+
+
+<script type="text/javascript">
+    $(document).ready( function(){ 
+   		setTimeout(function () {
+   			  $('.bs-docs-sidenav').affix({
+   				offset: {
+   				  top: function () { return $(window).width() <= 980 ? 0 : 20 }
+   				, bottom: 270
+   				}
+   			  });
+   			  
+   			  $('body').scrollspy('refresh');
+   			}, 100)	;
+
+    }) ;
+</script>
+
+</body>
+</html>

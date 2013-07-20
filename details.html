@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html charset=UTF-8">
+    <title>R2DOCX Documentation</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/highlight.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li class="navmenu"><a class="dropdown-toggle" href="index.html">Home</a></li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div id="navbar" class="span3 bs-docs-sidebar">
+			<ul class="nav nav-list bs-docs-sidenav">
+				<li><a href="#template"><i class="icon-chevron-right"></i>Template</a></li>
+				<li><a href="#styles"><i class="icon-chevron-right"></i>Styles</a></li>
+				<li><a href="#table_format"><i class="icon-chevron-right"></i>Formating tables</a></li>
+				<li><a href="#bookmarking"><i class="icon-chevron-right"></i>Insert into a Word bookmark</a></li>
+
+			</ul>
+		</div>
+		<div class="span9">
+		
+			<section id="template">
+				<div class="page-header">
+					<h1>Template</h1>
+					<div>
+						<p>You may need to generate docx documents in a particular corporate template (with specific fonts, colour schemes, logos, etc.).</p>
+						<p>Prepare a docx file that will be used as template (or use an existing one).</p>
+					</div>
+
+<pre>
+<span class="functioncall">require</span><span class="keyword">(</span> <span class="symbol">R2DOCX</span> <span class="keyword">)</span>
+<span class="comment"># Word document to use as base document or a template</span>
+<span class="symbol">template.file</span> <span class="assignement">=</span> <span class="string">"D:/templates/My_Template.docx"</span>
+<span class="comment"># Create a new object</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"example"</span><span class="keyword">,</span> <span class="argument">basefile</span> <span class="argument">=</span> <span class="symbol">template.file</span> <span class="keyword">)</span>
+</pre>
+					<div>
+						<p>That's it. This file is then duplicated in memory. R outputs sent to the object 'doc' will go into that copy.</p>
+						<p>By default, an empty document is used (located into the package directory).</p>
+					</div>
+				</div>
+			</section>
+			
+			
+			<section id="styles">
+				<div class="page-header">
+					<h1>Styles</h1>
+					<div>
+						<p>Available styles are the paragraph styles contained in the template.</p>
+					</div>
+
+<pre>
+<span class="functioncall">require</span><span class="keyword">(</span> <span class="symbol">R2DOCX</span> <span class="keyword">)</span>
+<span class="comment"># Create a new object with the default template</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"example"</span> <span class="keyword">)</span>
+<span class="functioncall">styles</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">)</span>
+<span class="comment"># [1] "Normal"                  "Titre1"                  "Titre2"                 </span>
+<span class="comment"># [4] "Titre3"                  "Titre4"                  "Titre5"                 </span>
+<span class="comment"># [7] "Titre6"                  "Titre7"                  "Titre8"                 </span>
+<span class="comment"># [10] "Titre9"                  "Titre"                   "Sous-titre"             </span>
+<span class="comment"># [13] "Citation"                "Citationintense"         "Lgende"                 </span>
+<span class="comment"># [16] "En-ttedetabledesmatires" "Sansinterligne"          "Paragraphedeliste"      </span>
+<span class="comment"># [19] "PlotReference"           "En-tte"                  "Pieddepage"             </span>
+<span class="comment"># [22] "Titre10"                 "BulletList"              "Titre20"                </span>
+<span class="comment"># [25] "TitleDoc"</span>
+</pre>
+					<div>
+						<h3>Paragraphs</h3>
+						<p>Function <code>addParagraph</code> require parameter <code>stylename</code> whose value must be one of the names returned by the function <code>styles</code>.</p>
+						<pre>doc = addParagraph( doc, value = "Normal text", stylename = "Normal" )</pre>
+						<h3>Headers</h3>
+						<p>Function <code>addHeader</code> need to know which styles are corresponding to which title level (1 ; 1.1 ; 1.1.1 ; etc.).</p>
+						<p>When template is read, R2DOCX try to guess what are theses styles. If he do not succeed, you will see that error when addHeader will be called:</p>
+						<pre><span class="functioncall">Error in addHeader(...</span>
+<span class="functioncall">You must defined header styles via setHeaderStyle first.</span></pre>
+						<p>You have to use function <code>setHeaderStyle</code> to indicate which available styles are meant to be used as header styles.</p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span> <span class="keyword">)</span>
+<span class="functioncall">styles</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">)</span>
+<span class="comment"># [1] "Normal"                  "Titre1"                  "Titre2"                 </span>
+<span class="comment"># [4] "Titre3"                  "Titre4"                  "Titre5"                 </span>
+<span class="comment"># [7] "Titre6"                  "Titre7"                  "Titre8"                 </span>
+<span class="comment">#[10] "Titre9"                  "Policepardfaut"          "TableauNormal"          </span>
+<span class="comment"># ...</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">setHeaderStyle</span><span class="keyword">(</span><span class="symbol">doc</span>
+        <span class="keyword">,</span> <span class="argument">stylenames</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Titre1"</span><span class="keyword">,</span> <span class="string">"Titre2"</span><span class="keyword">,</span> <span class="string">"Titre3"</span>
+                <span class="keyword">,</span> <span class="string">"Titre4"</span><span class="keyword">,</span> <span class="string">"Titre5"</span><span class="keyword">,</span> <span class="string">"Titre6"</span>
+                <span class="keyword">,</span> <span class="string">"Titre7"</span><span class="keyword">,</span> <span class="string">"Titre8"</span><span class="keyword">,</span> <span class="string">"Titre9"</span> <span class="keyword">)</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"title 1"</span><span class="keyword">,</span> <span class="number">1</span> <span class="keyword">)</span>
+</pre>
+						<h3>Tables of contents</h3>
+						<p>Functions <code>addTOC</code> has an optional argument <code>stylename</code>, if used, a table of contents will be created with entries formated with style specified. An example of usage is a table of contents of the produced graphics:</p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="keyword">function</span><span class="keyword">(</span><span class="keyword">)</span> <span class="functioncall">plot</span><span class="keyword">(</span> <span class="functioncall">rnorm</span><span class="keyword">(</span><span class="number">10</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">rnorm</span><span class="keyword">(</span><span class="number">10</span><span class="keyword">)</span> <span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="argument">width</span> <span class="argument">=</span> <span class="number">10</span><span class="keyword">,</span> <span class="argument">height</span> <span class="argument">=</span> <span class="number">8</span><span class="keyword">,</span> <span class="argument">legend</span><span class="argument">=</span><span class="string">"graph example 1"</span>
+        <span class="keyword">,</span> <span class="argument">stylename</span><span class="argument">=</span><span class="string">"PlotReference"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="keyword">function</span><span class="keyword">(</span><span class="keyword">)</span> <span class="functioncall">plot</span><span class="keyword">(</span> <span class="functioncall">rnorm</span><span class="keyword">(</span><span class="number">100</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">rnorm</span><span class="keyword">(</span><span class="number">100</span><span class="keyword">)</span> <span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="argument">width</span> <span class="argument">=</span> <span class="number">10</span><span class="keyword">,</span> <span class="argument">height</span> <span class="argument">=</span> <span class="number">8</span><span class="keyword">,</span> <span class="argument">legend</span><span class="argument">=</span><span class="string">"graph example 2"</span>
+        <span class="keyword">,</span> <span class="argument">stylename</span><span class="argument">=</span><span class="string">"PlotReference"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTOC</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">stylename</span><span class="argument">=</span><span class="string">"PlotReference"</span> <span class="keyword">)</span>
+</pre>
+						<p><button type="button" class="btn btn-warning">Warning</button><br/>
+							Do not use styles names that contains special character. 
+							In France for example, the default style named "Legend" becomes 
+							"L&eacute;gende" and is returned as "Lgende" by the <code>styles</code> R 
+							function.
+							The workaround is to create a new style based on "L&eacute;gende" 
+							and to name it "Legende". It will be then a valid name to use with 
+							R2DOCX.
+						</p>
+					</div>
+					
+				</div>
+			</section>			
+
+
+			<section id="table_format">
+				<div class="page-header">
+					<h1>Formating tables</h1>
+					<div>
+						<p>You can define table formating properties. It is first necessary to understand the model implemented :</p>
+						<div><table class="table table-bordered">
+								<thead>
+									<tr>
+										<td colspan=2>grouped header row 1</td>
+										<td>&nbsp;</td>
+										<td colspan=2>grouped header row p</td>
+									</tr>
+									<tr>
+										<td>column header 1</td>
+										<td>column header 2</td>
+										<td>column header ...</td>
+										<td>column header ...</td>
+										<td>column header p</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>data[1,1]</td>
+										<td>data[1,2]</td>
+										<td>data[1,...]</td>
+										<td>data[1,...]</td>
+										<td>data[1,p]</td>
+									</tr>
+									<tr>
+										<td>data[...,1]</td>
+										<td>data[...,2]</td>
+										<td>data[...,...]</td>
+										<td>data[...,...]</td>
+										<td>data[...,p]</td>
+									</tr>
+									<tr>
+										<td>data[n,1]</td>
+										<td>data[n,2]</td>
+										<td>data[n,...]</td>
+										<td>data[n,...]</td>
+										<td>data[n,p]</td>
+									</tr>
+								</tbody>
+							</table></div>
+						<h3>In few words:</h3>
+						<ul>
+							<li><strong>Headers</strong> are columns labels displayed</li>
+							<li><strong>Grouped headers</strong> is a row preceding headers where columns labels can be gathered under a label. This row is optional.</li>
+							<li>Each column has one of the following <strong>reporting types</strong> : double, integer, character, percent, date, datetime.</li>
+							<li>Data will be <strong>formated conditionnaly to the reporting types</strong> of each columns, for example, all numeric columns will be formated the same</li>
+						</ul>
+						<p>Elements that can be formated are <strong>cells</strong>, <strong>paragraphs of text</strong>, <strong>texts</strong></p>
+						<p><strong>Options</strong> are available to define:</p>
+						<ul>
+							<li>the number of digits to the left of the decimal point for numeric data and percent data.</li>
+							<li>the minimum number of digits to the right of the decimal point of double data or the minimum number of digits to display for integer data.</li>
+							<li>percent symbol to add after data of reporting type 'percent'</li>
+						</ul>
+
+
+						<h3>Simple example</h3>
+						<p>This code</p>
+<pre>
+<span class="comment"># let's format header labels with a bold font and a centered paragraph</span>
+<span class="comment"># also, change the number of digits to the left of the decimal point for double data</span>
+<span class="symbol">myformat</span> <span class="assignement">=</span> <span class="functioncall">tableProperties</span><span class="keyword">(</span>
+        <span class="argument">header.text</span> <span class="argument">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span><span class="argument">font.weight</span><span class="argument">=</span><span class="string">"bold"</span><span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="argument">header.par</span> <span class="argument">=</span> <span class="functioncall">parProperties</span><span class="keyword">(</span> <span class="argument">text.align</span> <span class="argument">=</span> <span class="string">"center"</span> <span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="argument">fraction.double.digit</span> <span class="argument">=</span> <span class="number">4</span>
+<span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="symbol">iris</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">5</span><span class="keyword">,</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">formats</span> <span class="argument">=</span> <span class="symbol">myformat</span> <span class="keyword">)</span>
+</pre>
+						<p>should produces the following result </p>
+						<div align="center">
+							<table id="k919PW70NFE8">
+								<thead>
+									<tr>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal.Length</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal.Width</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal.Length</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal.Width</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Species</span></div>
+											</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.1000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.5000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.4000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.2000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+											</td>
+									</tr>
+									<tr>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.9000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.0000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.4000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.2000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+											</td>
+									</tr>
+									<tr>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.7000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.2000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.3000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.2000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+											</td>
+									</tr>
+									<tr>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.6000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.1000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.5000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.2000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+											</td>
+									</tr>
+									<tr>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.0000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.6000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.4000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.2000</span></div>
+											</td>
+											<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:3px;padding-right:3px;">
+												<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+											</td>
+									</tr>
+								
+								</tbody>
+							</table>
+						</div>						
+						
+
+
+
+						<h2>textProperties</h2>
+						<p>Use function <code>textProperties</code> to specify formating text properties.</p>
+						<div align="center">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<td>Argument name</td>
+										<td>Details</td>
+										<td>Expected Value</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>color</td>
+										<td>font color</td>
+										<td>a string value (e.g. "#000000" or "black")</td>
+									</tr>
+									<tr>
+										<td>font-size</td>
+										<td>font size in px</td>
+										<td>an integer value : 0&gt;= value</td>
+									</tr>
+									<tr>
+										<td>font-weight</td>
+										<td>font weight</td>
+										<td>normal or "bold"</td>
+									</tr>
+									<tr>
+										<td>font-style</td>
+										<td>font style</td>
+										<td>normal or "italic"</td>
+									</tr>
+									<tr>
+										<td>font-family</td>
+										<td>font family name (Arial, Times, etc.)</td>
+										<td>a string value : must be an available font name, e.g.
+											Arial, Times, etc.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+<pre>
+<span class="functioncall">textProperties</span><span class="keyword">(</span><span class="argument">font.size</span> <span class="argument">=</span> <span class="number">10</span><span class="keyword">,</span> <span class="argument">font.weight</span> <span class="argument">=</span> <span class="string">"bold"</span> <span class="keyword">)</span>
+<span class="functioncall">textProperties</span><span class="keyword">(</span><span class="argument">font.size</span> <span class="argument">=</span> <span class="number">10</span><span class="keyword">,</span> <span class="argument">font.weight</span> <span class="argument">=</span> <span class="string">"bold"</span><span class="keyword">,</span> <span class="argument">color</span> <span class="argument">=</span> <span class="string">"red"</span> <span class="keyword">)</span>
+</pre>
+
+
+						<h2>parProperties</h2>
+						<p>Use function <code>parProperties</code> to specify formating paragraph properties.</p>
+						<div align="center">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Argument name</th>
+										<th>Details</th>
+										<th>Expected Value</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>text-align</td>
+										<td>text alignment</td>
+										<td>a string value : "left" or "right" or "center" or
+											"justify"</td>
+									</tr>
+									<tr>
+										<td>padding-bottom</td>
+										<td>space after paragraph in px</td>
+										<td>an integer value : 0&gt;= value</td>
+									</tr>
+									<tr>
+										<td>padding-top</td>
+										<td>space before paragraph in px</td>
+										<td>an integer value : 0&gt;= value</td>
+									</tr>
+									<tr>
+										<td>padding-left</td>
+										<td>space on the left of paragraph in px</td>
+										<td>an integer value : 0&gt;= value</td>
+									</tr>
+									<tr>
+										<td>padding-right</td>
+										<td>space on the right of paragraph in px</td>
+										<td>an integer value : 0&gt;= value</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<p>An additional argument is available as shortcut:</p>
+						<div align="center">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Argument name</th>
+										<th>Details</th>
+										<th>Expected Value</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>padding</td>
+										<td>cell bottom, top, left and right padding</td>
+										<td>integer value : 0&gt;= value. It sets all paddings to the same value.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+<pre>
+<span class="functioncall">parProperties</span><span class="keyword">(</span><span class="argument">text.align</span> <span class="argument">=</span> <span class="string">"center"</span><span class="keyword">,</span> <span class="argument">padding</span> <span class="argument">=</span> <span class="number">3</span> <span class="keyword">)</span>
+<span class="functioncall">parProperties</span><span class="keyword">(</span><span class="argument">text.align</span> <span class="argument">=</span> <span class="string">"right"</span><span class="keyword">,</span> <span class="argument">padding.left</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">,</span> <span class="argument">padding.right</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">)</span>
+</pre>
+						
+						
+						<h2>cellProperties</h2>
+						<p>Use function <code>cellProperties</code> to specify formating cell properties.</p>
+						<div align="center">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Argument name</th>
+										<th>Details</th>
+										<th>Expected Value</th>
+									</tr>
+								</thead>
+								<tbody>
+<tr><td>border.bottom.color</td><td>border bottom color</td><td>a string value (e.g. "#000000" or "black")</td></tr>
+<tr><td>border.bottom.style</td><td>border bottom style</td><td>a string value : "single" or "none" or "hidden" or "double" or "dotted" or "dashed" or "inset" or "outset"</td></tr>
+<tr><td>border.bottom.width</td><td>border bottom width</td><td>an integer value : 0&gt;= value</td></tr>
+<tr><td>border.left.color</td><td>border left color</td><td>a string value (e.g. "#000000" or "black")</td></tr>
+<tr><td>border.left.style</td><td>border left style</td><td>a string value : "single" or "none" or "hidden" or "double" or "dotted" or "dashed" or "inset" or "outset"</td></tr>
+<tr><td>border.left.width</td><td>border left width</td><td>an integer value : 0&gt;= value</td></tr>
+<tr><td>border.top.color</td><td>border top color</td><td>a string value (e.g. "#000000" or "black")</td></tr>
+<tr><td>border.top.style</td><td>border top style</td><td>a string value : "single" or "none" or "hidden" or "double" or "dotted" or "dashed" or "inset" or "outset"</td></tr>
+<tr><td>border.top.width</td><td>border top width</td><td>an integer value : 0&gt;= value</td></tr>
+<tr><td>border.right.color</td><td>border right color</td><td>a string value (e.g. "#000000" or "black")</td></tr>
+<tr><td>border.right.style</td><td>border right style</td><td>a string value : "single" or "none" or "hidden" or "double" or "dotted" or "dashed" or "inset" or "outset"</td></tr>
+<tr><td>border.right.width</td><td>border right width</td><td>integer value : 0&gt;= value</td></tr>
+<tr><td>vertical.align</td><td>cell content vertical alignment</td><td>a string value : "center" or "top" or "bottom"</td></tr>
+<tr><td>padding.bottom</td><td>cell bottom padding</td><td>integer value : 0&gt;= value</td></tr>
+<tr><td>padding.top</td><td>cell top padding</td><td>integer value : 0&gt;= value</td></tr>
+<tr><td>padding.left</td><td>cell left padding</td><td>integer value : 0&gt;= value</td></tr>
+<tr><td>padding.right</td><td>cell right padding</td><td>integer value : 0&gt;= value</td></tr>
+<tr><td>background.color</td><td>cell background color</td><td>a string value (e.g. "#000000" or "black")</td></tr>
+								</tbody>
+							</table>
+						</div>
+						<p>Additional arguments are available as shortcuts:</p>
+						<div align="center">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Argument name</th>
+										<th>Details</th>
+										<th>Expected Value</th>
+									</tr>
+								</thead>
+								<tbody>
+<tr><td>padding</td><td>cell bottom, top, left and right padding</td><td>integer value : 0&gt;= value. It sets all paddings to the same value.</td></tr>
+<tr><td>border.width</td><td>cell bottom, top, left and right border width</td><td>integer value : 0&gt;= value. It sets all border widths to the same value.</td></tr>
+<tr><td>border.style</td><td>cell bottom, top, left and right border style</td><td>a string value : "single" or "none" or "hidden" or "double" or "dotted" or "dashed" or "inset" or "outset". It sets all border styles to the same value.</td></tr>
+								</tbody>
+							</table>
+						</div>
+<pre>
+<span class="functioncall">cellProperties</span><span class="keyword">(</span> <span class="argument">border.color</span> <span class="argument">=</span> <span class="string">"gray"</span> <span class="keyword">)</span>
+<span class="functioncall">cellProperties</span><span class="keyword">(</span><span class="argument">border.left.width</span> <span class="argument">=</span> <span class="number">0</span><span class="keyword">,</span> <span class="argument">border.right.width</span> <span class="argument">=</span> <span class="number">0</span>
+         <span class="keyword">,</span> <span class="argument">border.bottom.width</span> <span class="argument">=</span> <span class="number">2</span><span class="keyword">,</span> <span class="argument">border.top.width</span> <span class="argument">=</span> <span class="number">0</span>
+         <span class="keyword">,</span> <span class="argument">padding.bottom</span> <span class="argument">=</span> <span class="number">2</span><span class="keyword">,</span> <span class="argument">padding.top</span> <span class="argument">=</span> <span class="number">2</span>
+         <span class="keyword">,</span> <span class="argument">padding.left</span> <span class="argument">=</span> <span class="number">2</span><span class="keyword">,</span> <span class="argument">padding.right</span> <span class="argument">=</span> <span class="number">2</span> <span class="keyword">)</span>
+</pre>					
+						
+						<h2>tableProperties</h2>
+						<p>Use function <code>tableProperties</code> to specify formating table properties.</p>
+						<div align="center">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Argument name</th>
+										<th>Details</th>
+										<th>Expected Value</th>
+									</tr>
+								</thead>
+								<tbody>
+<tr><td>header.text</td><td>header text formatting properties</td><td>textProperties</td></tr>
+<tr><td>header.par</td><td>header paragraph formatting properties</td><td>parProperties</td></tr>
+<tr><td>header.cell</td><td>header cell formatting properties</td><td>cellProperties</td></tr>
+<tr><td>groupedheader.text</td><td>grouped header text formatting properties</td><td>textProperties</td></tr>
+<tr><td>groupedheader.par</td><td>grouped header paragraph formatting properties</td><td>parProperties</td></tr>
+<tr><td>groupedheader.cell</td><td>grouped header cell formatting properties</td><td>cellProperties</td></tr>
+<tr><td>double.text</td><td>"double" columns formatting text properties</td><td>textProperties</td></tr>
+<tr><td>double.par</td><td>"double" columns formatting paragraph properties</td><td>parProperties</td></tr>
+<tr><td>double.cell</td><td>"double" columns formatting cell properties</td><td>cellProperties</td></tr>
+<tr><td>integer.text</td><td>"integer" columns formatting text properties</td><td>textProperties</td></tr>
+<tr><td>integer.par</td><td>"integer" columns formatting paragraph properties</td><td>parProperties</td></tr>
+<tr><td>integer.cell</td><td>"integer" columns formatting cell properties</td><td>cellProperties</td></tr>
+<tr><td>percent.text</td><td>"percent" columns formatting text properties</td><td>textProperties</td></tr>
+<tr><td>percent.par</td><td>"percent" columns formatting paragraph properties</td><td>parProperties</td></tr>
+<tr><td>percent.cell</td><td>"percent" columns formatting cell properties</td><td>cellProperties</td></tr>
+<tr><td>character.text</td><td>"character" columns formatting text properties</td><td>textProperties</td></tr>
+<tr><td>character.par</td><td>"character" columns formatting paragraph properties</td><td>parProperties</td></tr>
+<tr><td>character.cell</td><td>"character" columns formatting cell properties</td><td>cellProperties</td></tr>
+<tr><td>date.text</td><td>"date" columns formatting text properties</td><td>textProperties</td></tr>
+<tr><td>date.par</td><td>"date" columns formatting paragraph properties</td><td>parProperties</td></tr>
+<tr><td>date.cell</td><td>"date" columns formatting cell properties</td><td>cellProperties</td></tr>
+<tr><td>datetime.text</td><td>"datetime" columns formatting text properties</td><td>textProperties</td></tr>
+<tr><td>datetime.par</td><td>"datetime" columns formatting paragraph properties</td><td>parProperties</td></tr>
+<tr><td>datetime.cell</td><td>"datetime" columns formatting cell properties</td><td>cellProperties</td></tr>
+<tr><td>percent.addsymbol</td><td>a string value to add after percent data (default to %)</td><td>character</td></tr>
+<tr><td>integer.digit</td><td>minimum number of digits to display (to the left of the decimal point for data of type percent and double)</td><td>an integer value : 0&gt;= value</td></tr>
+<tr><td>fraction.double.digit</td><td>minimum number of digits to display to the right of the decimal point (for data of type double)</td><td>an integer value : 0&gt;= value</td></tr>
+<tr><td>fraction.percent.digit</td><td>minimum number of digits to display to the right of the decimal point (for data of type percent)</td><td>an integer value : 0&gt;= value</td></tr>
+
+								</tbody>
+							</table>
+						</div>
+						<p>Additional arguments are available as shortcuts:</p>
+						<div align="center">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Argument name</th>
+										<th>Details</th>
+										<th>Expected Value</th>
+									</tr>
+								</thead>
+								<tbody>
+<tr><td>data.cell</td><td>cell formatting properties for all data columns</td><td>A cellProperties object. It sets all cells to the same value (double.cell, character.cell, integer.cell, etc.).</td></tr>
+<tr><td>data.par</td><td>paragraph formatting properties for all data columns</td><td>A parProperties object. It sets all paragraphs to the same value (double.par, character.par, integer.par, etc.).</td></tr>
+<tr><td>data.text</td><td>text formatting properties for all data columns</td><td>A textProperties object. It sets all texts to the same value (double.text, character.text, integer.text, etc.).</td></tr>
+								</tbody>
+							</table>
+						</div>
+<pre>
+<span class="symbol">header.cellProperties</span> <span class="assignement">=</span> <span class="functioncall">cellProperties</span><span class="keyword">(</span> <span class="argument">border.left.width</span> <span class="argument">=</span> <span class="number">0</span><span class="keyword">,</span> <span class="argument">border.right.width</span> <span class="argument">=</span> <span class="number">0</span>
+        <span class="keyword">,</span> <span class="argument">border.bottom.width</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">,</span> <span class="argument">border.top.width</span> <span class="argument">=</span> <span class="number">0</span><span class="keyword">,</span> <span class="argument">padding</span> <span class="argument">=</span> <span class="number">3</span> <span class="keyword">)</span>
+<span class="symbol">data.cellProperties</span> <span class="assignement">=</span> <span class="functioncall">cellProperties</span><span class="keyword">(</span> <span class="argument">border.left.width</span> <span class="argument">=</span> <span class="number">0</span><span class="keyword">,</span> <span class="argument">border.right.width</span> <span class="argument">=</span> <span class="number">0</span>
+        <span class="keyword">,</span> <span class="argument">border.bottom.width</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">,</span> <span class="argument">border.top.width</span> <span class="argument">=</span> <span class="number">0</span><span class="keyword">,</span> <span class="argument">padding</span> <span class="argument">=</span> <span class="number">2</span> <span class="keyword">)</span>
+
+<span class="symbol">header.textProperties</span> <span class="assignement">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">font.size</span> <span class="argument">=</span> <span class="number">10</span><span class="keyword">,</span> <span class="argument">font.weight</span> <span class="argument">=</span> <span class="string">"bold"</span> <span class="keyword">)</span>
+<span class="symbol">data.textProperties</span> <span class="assignement">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">font.size</span> <span class="argument">=</span> <span class="number">10</span> <span class="keyword">)</span>
+
+<span class="symbol">leftPar</span> <span class="assignement">=</span> <span class="functioncall">parProperties</span><span class="keyword">(</span> <span class="argument">text.align</span> <span class="argument">=</span> <span class="string">"left"</span><span class="keyword">,</span> <span class="argument">padding.left</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">,</span> <span class="argument">padding.right</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">)</span>
+<span class="symbol">rightPar</span> <span class="assignement">=</span> <span class="functioncall">parProperties</span><span class="keyword">(</span> <span class="argument">text.align</span> <span class="argument">=</span> <span class="string">"right"</span><span class="keyword">,</span> <span class="argument">padding.left</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">,</span> <span class="argument">padding.right</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">)</span>
+<span class="symbol">centerPar</span> <span class="assignement">=</span> <span class="functioncall">parProperties</span><span class="keyword">(</span> <span class="argument">text.align</span> <span class="argument">=</span> <span class="string">"center"</span><span class="keyword">,</span> <span class="argument">padding.left</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">,</span> <span class="argument">padding.right</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">)</span>
+
+<span class="symbol">my.formats</span> <span class="assignement">=</span> <span class="functioncall">tableProperties</span><span class="keyword">(</span>
+        <span class="argument">character.par</span> <span class="argument">=</span> <span class="symbol">leftPar</span>
+        <span class="keyword">,</span> <span class="argument">percent.par</span> <span class="argument">=</span> <span class="symbol">rightPar</span>
+        <span class="keyword">,</span> <span class="argument">double.par</span> <span class="argument">=</span> <span class="symbol">rightPar</span>
+        <span class="keyword">,</span> <span class="argument">integer.par</span> <span class="argument">=</span> <span class="symbol">rightPar</span>
+        <span class="keyword">,</span> <span class="argument">groupedheader.par</span> <span class="argument">=</span> <span class="symbol">centerPar</span>
+        <span class="keyword">,</span> <span class="argument">groupedheader.text</span> <span class="argument">=</span> <span class="symbol">header.textProperties</span>
+        <span class="keyword">,</span> <span class="argument">groupedheader.cell</span> <span class="argument">=</span> <span class="symbol">header.cellProperties</span>
+        <span class="keyword">,</span> <span class="argument">header.cell</span> <span class="argument">=</span> <span class="symbol">header.cellProperties</span>
+        <span class="keyword">,</span> <span class="argument">header.par</span> <span class="argument">=</span> <span class="symbol">centerPar</span>
+        <span class="keyword">,</span> <span class="argument">header.text</span> <span class="argument">=</span> <span class="symbol">header.textProperties</span>
+        <span class="keyword">,</span> <span class="argument">data.cell</span> <span class="argument">=</span> <span class="symbol">data.cellProperties</span>
+        <span class="keyword">,</span> <span class="argument">data.text</span> <span class="argument">=</span> <span class="symbol">data.textProperties</span>
+<span class="keyword">)</span>
+</pre>	
+					</div>
+
+				</div>
+			</section>
+	
+
+
+			<section id="bookmarking">
+				<div class="page-header">
+					<h1>Replace Word bookmarks by tables, paragraphs and plots</h1>
+					<p>MS Work bookmarks can be used to define a named location in your document.</p>
+					<p>Functions <code>addTable</code>, <code>addPlot</code> and <code>addParagraph</code> can send respective outputs into theses bookmarks.</p>
+					<p>Theses functions have an optional argument <code>bookmark</code>, if used, 
+					content (table, plots or paragraphs) will <strong>replace the whole paragraph 
+					containing the bookmark</strong>.</p>
+					<p><button type="button" class="btn btn-warning">Warning</button><br/>
+					A paragraph in the template document can only contain one bookmark. Function <code>addParagraph</code> should be used if you want to replace multiple values in paragraphs. 
+					</p>
+					<h2>Complete example</H2>
+					<P>We are using that template file <a href="docx/ttest_example.docx">ttest_example.docx</a></P>
+					<P>We are expecting the following output file <a href="docx/document.docx">document.docx</a></P>
+<pre>
+<span class="comment"># do calculations...</span>
+<span class="symbol">data</span> <span class="assignement">=</span> <span class="functioncall">data.frame</span><span class="keyword">(</span> <span class="argument">X</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">:</span><span class="number">10</span><span class="keyword">,</span> <span class="argument">Y</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">:</span><span class="number">10</span> <span class="keyword">+</span> <span class="keyword">(</span><span class="functioncall">rnorm</span><span class="keyword">(</span><span class="number">10</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">)</span>
+<span class="symbol">x</span> <span class="assignement">=</span> <span class="functioncall">t.test</span><span class="keyword">(</span> <span class="symbol">data</span><span class="keyword">$</span><span class="symbol">X</span><span class="keyword">,</span> <span class="symbol">data</span><span class="keyword">$</span><span class="symbol">Y</span> <span class="keyword">)</span>
+
+<span class="symbol">conf.int</span> <span class="assignement">=</span> <span class="functioncall">data.frame</span><span class="keyword">(</span> <span class="argument">Name</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"lower"</span><span class="keyword">,</span> <span class="string">"upper"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">Value</span> <span class="argument">=</span> <span class="symbol">x</span><span class="keyword">$</span><span class="symbol">conf.int</span><span class="keyword">,</span> <span class="argument">stringsAsFactors</span> <span class="argument">=</span> <span class="symbol">F</span> <span class="keyword">)</span>
+
+
+
+<span class="functioncall">require</span><span class="keyword">(</span> <span class="symbol">R2DOCX</span> <span class="keyword">)</span>
+
+<span class="comment"># Word document to write</span>
+<span class="symbol">docx.file</span> <span class="assignement">=</span> <span class="string">"document.docx"</span>
+
+<span class="comment"># Remove file if it already exists</span>
+<span class="keyword">if</span><span class="keyword">(</span><span class="functioncall">file.exists</span><span class="keyword">(</span> <span class="symbol">docx.file</span> <span class="keyword">)</span><span class="keyword">)</span>
+        <span class="functioncall">file.remove</span><span class="keyword">(</span> <span class="symbol">docx.file</span> <span class="keyword">)</span>
+
+<span class="comment"># Word document to use as base document or a template</span>
+<span class="symbol">template.file</span> <span class="assignement">=</span> <span class="functioncall">file.path</span><span class="keyword">(</span> <span class="functioncall">find.package</span><span class="keyword">(</span><span class="string">"R2DOCX"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="string">"examples/ttest_example.docx"</span><span class="keyword">,</span> <span class="argument">fsep</span> <span class="argument">=</span> <span class="string">"/"</span> <span class="keyword">)</span>
+
+<span class="comment"># create document</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span><span class="keyword">,</span> <span class="argument">basefile</span> <span class="argument">=</span> <span class="symbol">template.file</span> <span class="keyword">)</span>
+
+
+<span class="comment"># replace bookmarks 'AUTHOR' and 'REVIEWER' located in 'ttest_example.docx' by dummy values</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span>
+                <span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"James Sonny Crockett"</span><span class="keyword">,</span> <span class="string">"Ricardo Rico Tubbs"</span> <span class="keyword">)</span>
+                <span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"Normal"</span>
+                <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"AUTHOR"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span>
+                <span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"Martin Marty Castillo"</span> <span class="keyword">)</span>
+                <span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"Normal"</span>
+                <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"REVIEWER"</span> <span class="keyword">)</span>
+
+
+
+<span class="comment"># replace bookmarks 'DATA' and 'CONFINT' located in 'ttest_example.docx' by data.frame objects 'data' and 'conf.int'</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span>
+                <span class="keyword">,</span> <span class="symbol">data</span>
+                <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"DATA"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span>
+                <span class="keyword">,</span> <span class="symbol">conf.int</span>
+                <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"CONFINT"</span> <span class="keyword">)</span>
+
+
+
+<span class="comment">## replace bookmark 'STATS' by a Paragraph composed of different texts, with different colors and fonts</span>
+<span class="symbol">val</span> <span class="assignement">=</span> <span class="string">"T-value: [tvalue], DF: [DF], P-Value: [pvalue]"</span>
+
+<span class="symbol">repl.styles</span> <span class="assignement">=</span> <span class="functioncall">list</span><span class="keyword">(</span>
+                <span class="argument">tvalue</span> <span class="argument">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">font.size</span> <span class="argument">=</span> <span class="number">12</span><span class="keyword">,</span> <span class="argument">font.family</span><span class="argument">=</span><span class="string">"Courier New"</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"red"</span> <span class="keyword">)</span>
+                <span class="keyword">,</span> <span class="argument">DF</span><span class="argument">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">font.size</span> <span class="argument">=</span> <span class="number">12</span><span class="keyword">,</span> <span class="argument">font.family</span><span class="argument">=</span><span class="string">"Courier New"</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span> <span class="keyword">)</span>
+                <span class="keyword">,</span> <span class="argument">pvalue</span> <span class="argument">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">font.size</span> <span class="argument">=</span> <span class="number">12</span><span class="keyword">,</span> <span class="argument">font.family</span><span class="argument">=</span><span class="string">"Courier New"</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span> <span class="keyword">)</span>
+<span class="keyword">)</span>
+<span class="symbol">repl</span> <span class="assignement">=</span> <span class="functioncall">list</span><span class="keyword">(</span> <span class="argument">tvalue</span> <span class="argument">=</span> <span class="functioncall">sprintf</span><span class="keyword">(</span><span class="string">"%.3f"</span><span class="keyword">,</span> <span class="symbol">x</span><span class="keyword">$</span><span class="symbol">statistic</span><span class="keyword">)</span>
+                <span class="keyword">,</span> <span class="argument">DF</span> <span class="argument">=</span> <span class="functioncall">sprintf</span><span class="keyword">(</span><span class="string">"%.0f"</span><span class="keyword">,</span> <span class="symbol">x</span><span class="keyword">$</span><span class="symbol">parameter</span><span class="keyword">)</span>
+                <span class="keyword">,</span> <span class="argument">pvalue</span> <span class="argument">=</span> <span class="functioncall">sprintf</span><span class="keyword">(</span><span class="string">"%.3f"</span><span class="keyword">,</span> <span class="symbol">x</span><span class="keyword">$</span><span class="symbol">p.value</span><span class="keyword">)</span> <span class="keyword">)</span>
+
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span>
+                <span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="symbol">val</span>
+                <span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"Normal"</span>
+                <span class="keyword">,</span> <span class="argument">replacements</span> <span class="argument">=</span> <span class="symbol">repl</span>
+                <span class="keyword">,</span> <span class="argument">replacement.styles</span> <span class="argument">=</span> <span class="symbol">repl.styles</span>
+                <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"STATS"</span> <span class="keyword">)</span>
+
+
+<span class="comment">## replace bookmark 'PLOT' by a plot</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span>
+                <span class="keyword">,</span> <span class="argument">fun</span> <span class="argument">=</span> <span class="symbol">plot</span>
+                <span class="keyword">,</span> <span class="argument">x</span> <span class="argument">=</span> <span class="functioncall">rnorm</span><span class="keyword">(</span> <span class="number">100</span> <span class="keyword">)</span>
+                <span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="functioncall">rnorm</span> <span class="keyword">(</span><span class="number">100</span> <span class="keyword">)</span>
+                <span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"base plot main title"</span>
+                <span class="keyword">,</span> <span class="argument">bookmark</span> <span class="argument">=</span> <span class="string">"PLOT"</span><span class="keyword">)</span>
+
+<span class="functioncall">writeDoc</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="symbol">docx.file</span> <span class="keyword">)</span>
+
+
+<span class="keyword">if</span><span class="keyword">(</span> <span class="functioncall">interactive</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">)</span> <span class="keyword">{</span>
+        <span class="symbol">out</span> <span class="assignement">=</span> <span class="functioncall">readline</span><span class="keyword">(</span> <span class="string">"Open the docx file (y/n)? "</span> <span class="keyword">)</span>
+        <span class="keyword">if</span><span class="keyword">(</span> <span class="symbol">out</span> == <span class="string">"y"</span> <span class="keyword">)</span> <span class="functioncall">browseURL</span><span class="keyword">(</span> <span class="functioncall">file.path</span><span class="keyword">(</span><span class="functioncall">getwd</span><span class="keyword">(</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">docx.file</span> <span class="keyword">)</span> <span class="keyword">)</span>
+<span class="keyword">}</span>
+</pre>
+				</div>
+			</section>
+		</div>
+	
+	</div><!-- /.row -->
+
+</div><!-- /.container -->
+
+
+<script type="text/javascript">
+    $(document).ready( function(){ 
+   		setTimeout(function () {
+   			  $('.bs-docs-sidenav').affix({
+   				offset: {
+   				  top: function () { return $(window).width() <= 980 ? 0 : 20 }
+   				, bottom: 270
+   				}
+   			  });
+   			  
+   			  $('body').scrollspy('refresh');
+   			}, 100)	;
+
+    }) ;
+</script>
+
+</body>
+</html>

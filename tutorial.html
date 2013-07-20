@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html charset=UTF-8">
+    <title>R2DOCX Documentation</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='css/highlight.css'>
+    <link href="css/docs.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li class="navmenu"><a class="dropdown-toggle" href="index.html">Home</a></li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="container">
+	<div class="row">
+		<div id="navbar" class="span3 bs-docs-sidebar">
+			<ul class="nav nav-list bs-docs-sidenav">
+				<li><a href="#plots"><i class="icon-chevron-right"></i>Plots</a></li>
+				<li><a href="#texts"><i class="icon-chevron-right"></i>Text outputs</a></li>
+				<li><a href="#toc"><i class="icon-chevron-right"></i>Tables of contents</a></li>
+				<li><a href="#page_breaks"><i class="icon-chevron-right"></i>Page breaks</a></li>
+			</ul>
+		</div>
+		<div class="span9">
+			<section id="plots">
+				<div class="page-header">
+					<h1>Plots</h1>
+					<p>Function <code>addPlot</code> will capture plots into png files and insert them into the output document with eventually a legend text below graphics.</p>
+					<p>Its main argument is a function. The plotting is done by this function. If this function requires parameters, add them as parameters to the <code>addPlot</code> function (the <code>...</code> argument). </p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">,</span> <span class="symbol">plot</span>
+        <span class="keyword">,</span> <span class="argument">x</span> <span class="argument">=</span> <span class="functioncall">rnorm</span><span class="keyword">(</span> <span class="number">10</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="functioncall">rnorm</span><span class="keyword">(</span> <span class="number">10</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"main title"</span>
+        <span class="keyword">,</span> <span class="argument">legend</span> <span class="argument">=</span> <span class="string">"graph example"</span><span class="keyword">,</span> <span class="argument">stylename</span><span class="argument">=</span><span class="string">"PlotReference"</span>
+<span class="keyword">)</span>
+</pre>
+					<p>If manipulating <code>lattice</code> or <code>ggplot2</code> plot objects, use <code>print</code> on the object in the function (otherwise <code>lattice</code> or <code>ggplot2</code> objects won't be written). </p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">,</span> <span class="symbol">print</span>
+        <span class="keyword">,</span> <span class="argument">x</span> <span class="argument">=</span> <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">Sepal.Length</span><span class="keyword">,</span> <span class="symbol">Petal.Length</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">iris</span>
+                <span class="keyword">,</span> <span class="argument">color</span> <span class="argument">=</span> <span class="symbol">Species</span><span class="keyword">,</span> <span class="argument">size</span> <span class="argument">=</span> <span class="symbol">Petal.Width</span> <span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="argument">legend</span> <span class="argument">=</span> <span class="string">"graph example"</span><span class="keyword">,</span> <span class="argument">stylename</span><span class="argument">=</span><span class="string">"PlotReference"</span>
+<span class="keyword">)</span>
+</pre>
+					<p>To combine multiple plots, simply create a function to execute all plotting instructions:</p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">,</span> <span class="keyword">function</span><span class="keyword">(</span> <span class="keyword">)</span> <span class="keyword">{</span>
+                <span class="functioncall">print</span><span class="keyword">(</span> <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">Sepal.Length</span><span class="keyword">,</span> <span class="symbol">Petal.Length</span>
+                        <span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">iris</span><span class="keyword">,</span> <span class="argument">color</span> <span class="argument">=</span> <span class="symbol">Species</span><span class="keyword">,</span> <span class="argument">size</span> <span class="argument">=</span> <span class="symbol">Petal.Width</span> <span class="keyword">)</span> <span class="keyword">)</span>
+                <span class="functioncall">plot</span><span class="keyword">(</span> <span class="argument">x</span> <span class="argument">=</span> <span class="functioncall">rnorm</span><span class="keyword">(</span> <span class="number">10</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="functioncall">rnorm</span><span class="keyword">(</span> <span class="number">10</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"main title"</span> <span class="keyword">)</span>
+        <span class="keyword">}</span>
+        <span class="keyword">,</span> <span class="argument">legend</span> <span class="argument">=</span> <span class="string">"graph example"</span><span class="keyword">,</span> <span class="argument">stylename</span><span class="argument">=</span><span class="string">"PlotReference"</span>
+<span class="keyword">)</span>
+</pre>
+				</div>
+			</section>
+
+			<section id="texts">
+				<div class="page-header">
+					<h1>Text outputs</h1>
+					<p>Simple texts output can be done with function <code>addParagraph</code>.</p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Hello World!"</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"Normal"</span> <span class="keyword">)</span>
+</pre>
+					<p>Argument <code>stylename</code> is detailed in the chapter <a href="details.html#styles">Styles</a>.</p>
+					<p>The function can also be used to execute text replacement and conditional formatting. If replacements have to be done, keywords that identify text to be replaced must be contains into square brackets [].</p>
+					<p>Replacement texts has to be formated with <code>textProperties</code> objects.</p>
+<pre>
+<span class="comment"># template text</span>
+<span class="symbol">x</span> <span class="assignement">=</span> <span class="string">"[animal] eats [food]."</span>
+
+<span class="comment"># define formatting properties for replacement text. See chapter "styles"</span>
+<span class="symbol">textProp</span> <span class="assignement">=</span> <span class="functioncall">textProperties</span><span class="keyword">(</span> <span class="argument">color</span> <span class="argument">=</span> <span class="string">"blue"</span> <span class="keyword">)</span>
+<span class="symbol">replacement.styles</span> <span class="assignement">=</span> <span class="functioncall">list</span><span class="keyword">(</span> <span class="argument">animal</span><span class="argument">=</span> <span class="symbol">textProp</span><span class="keyword">,</span> <span class="argument">food</span><span class="argument">=</span> <span class="symbol">textProp</span> <span class="keyword">)</span>
+<span class="comment"># define replacement text</span>
+<span class="symbol">replacements</span> <span class="assignement">=</span> <span class="functioncall">list</span><span class="keyword">(</span> <span class="argument">animal</span> <span class="argument">=</span> <span class="string">"donkey"</span><span class="keyword">,</span> <span class="argument">food</span> <span class="argument">=</span> <span class="string">"grass"</span> <span class="keyword">)</span>
+
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="symbol">x</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"Normal"</span>
+        <span class="keyword">,</span> <span class="argument">replacements</span> <span class="argument">=</span> <span class="symbol">replacements</span>
+        <span class="keyword">,</span> <span class="argument">replacement.styles</span> <span class="argument">=</span> <span class="symbol">replacement.styles</span>
+<span class="keyword">)</span>
+</pre>
+					<p>Produces: <span style="color:blue;">donkey</span> eats <span style="color:blue;">grass</span>.</p>
+					
+					
+					<p>The function is vectorized</p>
+<pre>
+<span class="symbol">x</span> <span class="assignement">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"text 1"</span><span class="keyword">,</span> <span class="string">"text 2"</span><span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="symbol">x</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"Normal"</span><span class="keyword">)</span>
+</pre>	
+				</div>
+			</section>
+
+			<section id="toc">
+				<div class="page-header">
+					<h1>Table of contents</h1>
+					<p>Insert a table of contents with function <code>addTOC</code>.</p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTOC</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Title 1"</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">)</span><span class="keyword">;</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Title 1.1"</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">;</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPageBreak</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Title 1.2"</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">;</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPageBreak</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Title 1.2.1"</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span><span class="keyword">;</span>
+</pre>
+					<p>Insert a customized table of contents with argument <code>stylename</code>. If used, a table of contents will be created containing entries formated with specified styles. An example of usage is a table of contents of the produced graphics:</p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">&lt;-</span> <span class="functioncall">addTOC</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"PlotReference"</span><span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Title 1"</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">)</span><span class="keyword">;</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Title 1.1"</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">;</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span>
+        <span class="keyword">,</span> <span class="argument">fun</span> <span class="argument">=</span> <span class="symbol">plot</span><span class="keyword">,</span> <span class="argument">x</span> <span class="argument">=</span> <span class="functioncall">rnorm</span><span class="keyword">(</span> <span class="number">100</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="functioncall">rnorm</span> <span class="keyword">(</span><span class="number">100</span> <span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"base plot main title"</span>
+        <span class="keyword">,</span> <span class="argument">legend</span><span class="argument">=</span><span class="string">"graph example 1"</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"PlotReference"</span>
+<span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPageBreak</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Title 1.2"</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">;</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="symbol">iris</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addParagraph</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="argument">value</span><span class="argument">=</span><span class="string">"table 1"</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"PlotReference"</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPageBreak</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">)</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addHeader</span><span class="keyword">(</span><span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"Title 1.2.1"</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span><span class="keyword">;</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPlot</span><span class="keyword">(</span> <span class="symbol">doc</span>
+        <span class="keyword">,</span> <span class="argument">fun</span> <span class="argument">=</span> <span class="symbol">plot</span><span class="keyword">,</span> <span class="argument">x</span> <span class="argument">=</span> <span class="functioncall">rnorm</span><span class="keyword">(</span> <span class="number">100</span> <span class="keyword">)</span><span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="functioncall">rnorm</span> <span class="keyword">(</span><span class="number">100</span> <span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"base plot main title"</span>
+        <span class="keyword">,</span> <span class="argument">legend</span><span class="argument">=</span><span class="string">"graph example 2"</span><span class="keyword">,</span> <span class="argument">stylename</span> <span class="argument">=</span> <span class="string">"PlotReference"</span>
+<span class="keyword">)</span>
+</pre>
+				</div>
+			</section>
+
+
+
+
+			<section id="page_breaks">
+				<div class="page-header">
+					<h1>Page breaks</h1>
+					<p>Insert a page break with <code>addPageBreak</code>.</p>
+					<pre><span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addPageBreak</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">)</span></pre>
+				</div>
+			</section>
+		</div>
+	
+	</div><!-- /.row -->
+
+</div><!-- /.container -->
+
+
+<script type="text/javascript">
+    $(document).ready( function(){ 
+   		setTimeout(function () {
+   			  $('.bs-docs-sidenav').affix({
+   				offset: {
+   				  top: function () { return $(window).width() <= 980 ? 0 : 20 }
+   				, bottom: 270
+   				}
+   			  });
+   			  
+   			  $('body').scrollspy('refresh');
+   			}, 100)	;
+
+    }) ;
+</script>
+
+</body>
+</html>

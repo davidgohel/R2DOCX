@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html charset=UTF-8">
+    <title>R2DOCX Documentation</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='css/highlight.css'>
+    <link href="css/docs.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li class="navmenu"><a class="dropdown-toggle" href="index.html">Home</a></li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="container">
+	<div class="row">
+		<div id="navbar" class="span3 bs-docs-sidebar">
+			<ul class="nav nav-list bs-docs-sidenav">
+				<li><a href="#headers"><i class="icon-chevron-right"></i>Header labels</a></li>
+				<li><a href="#grouped_headers"><i class="icon-chevron-right"></i>Grouped header labels</a></li>
+				<li><a href="#merging_cells"><i class="icon-chevron-right"></i>Merging data cell</a></li>
+				<li><a href="#cell_colors"><i class="icon-chevron-right"></i>Coloring data cell or font</a></li>
+				<li><a href="#table_format"><i class="icon-chevron-right"></i>Formating tables</a></li>
+				<li><a href="#complete_example"><i class="icon-chevron-right"></i>Complete example</a></li>				
+			</ul>
+		</div>
+		<div class="span9">
+
+			<section id="headers">
+				<div class="page-header">
+					<h1>Header labels</h1>
+					<p>Specify column labels to display with argument <code>header.labels</code></p>
+					
+					<p>The following code:</p>
+<pre>
+<span class="functioncall">require</span><span class="keyword">(</span> <span class="symbol">R2DOCX</span> <span class="keyword">)</span>
+
+<span class="comment"># Create a new object</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span> <span class="keyword">)</span>
+
+<span class="functioncall">desc</span><span class="keyword">(</span> <span class="symbol">iris</span> <span class="keyword">)</span>
+<span class="comment">#'data.frame':   150 obs. of  5 variables:</span>
+<span class="comment"># $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
+<span class="comment"># $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span>
+<span class="comment"># $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span>
+<span class="comment"># $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span>
+<span class="comment"># $ Species</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span> <span class="keyword">,</span> <span class="symbol">iris</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">5</span><span class="keyword">,</span> <span class="keyword">]</span>
+        <span class="keyword">,</span> <span class="argument">header.labels</span> <span class="argument">=</span> <span class="functioncall">list</span><span class="keyword">(</span>
+        <span class="string">"Sepal.Length"</span> <span class="argument">=</span> <span class="string">" Sepal Length"</span><span class="keyword">,</span> <span class="string">"Sepal.Width"</span> <span class="argument">=</span> <span class="string">" Sepal Width"</span>
+        <span class="keyword">,</span> <span class="string">"Petal.Length"</span> <span class="argument">=</span> <span class="string">" Petal Length"</span><span class="keyword">,</span> <span class="string">"Petal.Width"</span> <span class="argument">=</span> <span class="string">" Petal Width"</span>
+        <span class="keyword">,</span> <span class="string">"Species"</span> <span class="argument">=</span> <span class="string">"Species"</span>
+        <span class="keyword">)</span>
+<span class="keyword">)</span>
+
+<span class="comment"># write Word document</span>
+<span class="functioncall">writeDoc</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"document.docx"</span> <span class="keyword">)</span>
+</pre>
+					<p>should produce that table:</p>
+					<div>
+<table id="635PMfeJTMNZ">
+<thead>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;"> Sepal Length</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;"> Sepal Width</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;"> Petal Length</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;"> Petal Width</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Species</span></div>
+			</td>
+	</tr>
+</thead>
+
+<tbody>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.10</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.50</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.90</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.00</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.70</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.30</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.60</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.10</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.50</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.00</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.60</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+</tbody>
+
+</table>
+					</div>
+				</div>
+			</section>
+
+
+
+
+			<section id="grouped_headers">
+				<div class="page-header">
+					<h1>Grouped header labels</h1>
+					<p>The following code:</p>
+<pre>
+<span class="functioncall">require</span><span class="keyword">(</span> <span class="symbol">R2DOCX</span> <span class="keyword">)</span>
+
+<span class="comment"># Create a new object</span>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">new</span><span class="keyword">(</span><span class="string">"Docx"</span><span class="keyword">,</span> <span class="argument">title</span> <span class="argument">=</span> <span class="string">"My example"</span> <span class="keyword">)</span>
+
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span>
+<span class="keyword">,</span> <span class="symbol">iris</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">5</span><span class="keyword">,</span><span class="keyword">]</span>
+<span class="keyword">,</span> <span class="argument">grouped.cols</span><span class="argument">=</span><span class="functioncall">list</span><span class="keyword">(</span> <span class="string">"Sepal"</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"Sepal.Length"</span><span class="keyword">,</span> <span class="string">"Sepal.Width"</span> <span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="string">"Petal"</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Petal.Length"</span><span class="keyword">,</span> <span class="string">"Petal.Width"</span><span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="string">"Species"</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Species"</span><span class="keyword">)</span>
+<span class="keyword">)</span>
+<span class="keyword">)</span>
+
+<span class="comment"># write Word document</span>
+<span class="functioncall">writeDoc</span><span class="keyword">(</span> <span class="symbol">doc</span><span class="keyword">,</span> <span class="string">"document.docx"</span> <span class="keyword">)</span>
+</pre>
+					<p>should produce that table</p>
+					<div>
+<table id="m51ZoyW6iQ2k">
+<thead>
+	<tr>
+			<td colspan="2" style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal</span></div>
+			</td>
+			<td colspan="2" style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;"></span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal.Length</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal.Width</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal.Length</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal.Width</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Species</span></div>
+			</td>
+	</tr>
+</thead>
+
+<tbody>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.10</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.50</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.90</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.00</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.70</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.30</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.60</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.10</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.50</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.00</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.60</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+	</tr>
+</tbody>
+
+</table>
+					</div>
+					<p><br/>Argument <code>grouped.cols</code>is a named list: <br/>
+					<ul><li>Names are labels to display, 
+					list elements are character vector containing data column 
+					names to gather under one label.</li>
+					<li>All columns names must be in exactly 
+					one element.</li>
+					<li>Order of appearance in elements must be the order of columns 
+					names in the dataset.</li>
+					<li>E.g. if columns are 'col1', 'col2', 'col3', 
+					argument cannot be:
+					<pre>list ('colgroup1'='col2', 'colgroup2'=c('col1', 'col3'))</pre></li>
+					<li>To leave blank headers labels, name the element the same that the column name:
+					<pre>
+doc = addTable( doc, iris, grouped.cols=list( ..., "Species" = "Species" ) )</pre></li></ul>
+				</div>
+			</section>
+
+
+
+
+			<section id="merging_cells">
+				<div class="page-header">
+					<h1>Merging data cell</h1>
+					<p>If argument <code>span.columns</code> is used, identical successive cells inside columns will be merged.</p>
+					<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span>
+        <span class="keyword">,</span> <span class="symbol">iris</span><span class="keyword">[</span><span class="number">46</span><span class="keyword">:</span><span class="number">55</span><span class="keyword">,</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">5</span><span class="keyword">,</span><span class="number">1</span><span class="keyword">:</span><span class="number">4</span><span class="keyword">)</span> <span class="keyword">]</span>
+        <span class="keyword">,</span> <span class="argument">span.columns</span> <span class="argument">=</span> <span class="string">"Species"</span>
+<span class="keyword">)</span>
+</pre>
+					<div>
+<table id="OsE1Lfk08riH">
+<thead>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Species</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal.Length</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal.Width</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal.Length</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+				<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal.Width</span></div>
+			</td>
+	</tr>
+</thead>
+
+<tbody>
+	<tr>
+			<td rowspan="5" style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.80</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.00</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.30</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.10</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.80</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.60</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.60</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.30</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.70</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.50</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.00</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.30</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td rowspan="5" style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">versicolor</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">7.00</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.70</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">6.40</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.20</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.50</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.50</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">6.90</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.10</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.90</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.50</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.50</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2.30</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.00</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.30</span></div>
+			</td>
+	</tr>
+	<tr>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">6.50</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2.80</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.60</span></div>
+			</td>
+			<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+				<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.50</span></div>
+			</td>
+	</tr>
+</tbody>
+
+</table>
+					</div>
+
+				</div>
+			</section>
+
+			<section id="cell_colors">
+				<div class="page-header">
+					<h1>Coloring data cell or font</h1>
+					<p>For coloring fonts of columns use argument <code>col.fontcolors</code></p>
+					<p>For coloring cell backgrounds of columns use argument <code>col.colors</code></p>
+					
+					<p>The following code:</p>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span>
+        <span class="keyword">,</span> <span class="symbol">iris</span><span class="keyword">[</span> <span class="number">1</span><span class="keyword">:</span><span class="number">5</span><span class="keyword">,</span> <span class="keyword">]</span>
+        <span class="keyword">,</span> <span class="argument">col.fontcolors</span> <span class="argument">=</span> <span class="functioncall">list</span><span class="keyword">(</span> <span class="argument">Species</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"red"</span><span class="keyword">,</span> <span class="string">"blue"</span>
+                <span class="keyword">,</span> <span class="string">"red"</span><span class="keyword">,</span> <span class="string">"blue"</span><span class="keyword">,</span> <span class="string">"red"</span> <span class="keyword">)</span> <span class="keyword">)</span>
+        <span class="keyword">,</span> <span class="argument">col.colors</span> <span class="argument">=</span> <span class="functioncall">list</span><span class="keyword">(</span> <span class="argument">Sepal.Length</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"red"</span><span class="keyword">,</span> <span class="string">"blue"</span>
+                <span class="keyword">,</span> <span class="string">"red"</span><span class="keyword">,</span> <span class="string">"blue"</span><span class="keyword">,</span> <span class="string">"red"</span> <span class="keyword">)</span> <span class="keyword">)</span>
+<span class="keyword">)</span>
+</pre>
+					<p>should produce that table</p>
+					<div>
+						<table id="uS7k952Fy3aX">
+						<thead>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal.Length</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Sepal.Width</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal.Length</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Petal.Width</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Species</span></div>
+									</td>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;background-color:red;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.10</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.50</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:red;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;background-color:blue;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.90</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.00</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;background-color:red;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.70</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.20</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.30</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:red;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;background-color:blue;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">4.60</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.10</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.50</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;background-color:red;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">5.00</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">3.60</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">1.40</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.20</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:red;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">setosa</span></div>
+									</td>
+							</tr>
+						</tbody>
+						
+						</table>
+					</div>
+				</div>
+			</section>
+			<section id="table_format">
+				<div class="page-header">
+					<h1>Formating tables</h1>
+					<a href="details.html#table_format">details</a>
+				</div>
+			</section>
+
+			<section id="complete_example">
+				<div class="page-header">
+					<h1>Complete example</h1>
+<pre>
+<span class="symbol">doc</span> <span class="assignement">=</span> <span class="functioncall">addTable</span><span class="keyword">(</span> <span class="symbol">doc</span>
+        <span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">weights.summary</span>
+        <span class="keyword">,</span> <span class="argument">header.labels</span> <span class="argument">=</span> <span class="functioncall">list</span><span class="keyword">(</span><span class="string">"id"</span> <span class="argument">=</span> <span class="string">"Subject Identifier"</span><span class="keyword">,</span> <span class="string">"avg.weight"</span> <span class="argument">=</span> <span class="string">"Average Weight"</span>
+                <span class="keyword">,</span> <span class="string">"regularity"</span> <span class="argument">=</span> <span class="string">"Regularity"</span><span class="keyword">,</span> <span class="string">"visit.n"</span> <span class="argument">=</span> <span class="string">"Number of visits"</span><span class="keyword">,</span> <span class="string">"last.day"</span> <span class="argument">=</span> <span class="string">"Last visit"</span>
+        <span class="keyword">)</span> <span class="comment"># columns labels to display</span>
+        <span class="keyword">,</span> <span class="argument">grouped.cols</span><span class="argument">=</span><span class="functioncall">list</span><span class="keyword">(</span> <span class="string">"id"</span> <span class="argument">=</span> <span class="string">"id"</span>
+                <span class="keyword">,</span> <span class="string">"Summary"</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span> <span class="string">"avg.weight"</span><span class="keyword">,</span>  <span class="string">"regularity"</span><span class="keyword">,</span> <span class="string">"visit.n"</span><span class="keyword">,</span> <span class="string">"last.day"</span> <span class="keyword">)</span>
+        <span class="keyword">)</span> <span class="comment"># grouped headers line to add before headers line</span>
+        <span class="keyword">,</span> <span class="argument">col.types</span> <span class="argument">=</span> <span class="functioncall">list</span><span class="keyword">(</span> <span class="string">"id"</span> <span class="argument">=</span> <span class="string">"character"</span><span class="keyword">,</span> <span class="string">"avg.weight"</span> <span class="argument">=</span> <span class="string">"double"</span>
+                <span class="keyword">,</span> <span class="string">"regularity"</span> <span class="argument">=</span> <span class="string">"percent"</span><span class="keyword">,</span> <span class="string">"visit.n"</span> <span class="argument">=</span> <span class="string">"integer"</span>
+                <span class="keyword">,</span> <span class="string">"last.day"</span> <span class="argument">=</span> <span class="string">"date"</span> <span class="keyword">)</span> <span class="comment"># reporting types of each columns </span>
+        <span class="keyword">,</span> <span class="argument">col.fontcolors</span> <span class="argument">=</span> <span class="functioncall">list</span><span class="keyword">(</span> <span class="string">"regularity"</span> <span class="argument">=</span> <span class="functioncall">ifelse</span><span class="keyword">(</span> <span class="symbol">weights.summary</span><span class="keyword">$</span><span class="symbol">regularity</span> <span class="keyword">&lt;</span> <span class="number">0.5</span> <span class="keyword">,</span> <span class="string">"gray"</span><span class="keyword">,</span> <span class="string">"blue"</span><span class="keyword">)</span> <span class="keyword">)</span> <span class="comment"># customized font colors for column "regularity"</span>
+<span class="keyword">)</span>
+</pre>
+					<div>
+						<table id="43gM56g3ELlI">
+						<thead>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;"></span></div>
+									</td>
+									<td colspan="4" style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Summary</span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Subject Identifier</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Average Weight</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Regularity</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Number of visits</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:3px;padding-top:3px;padding-left:3px;padding-right:3px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:bold;font-style:normal;font-family:Arial;">Last visit</span></div>
+									</td>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">ALD</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">77.17</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.53%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">10</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-02-05 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">CLJ</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">58.06</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.68%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">13</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-19 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">DAB</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">70.52</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:gray;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.32%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;"> 6</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-01-29 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">DAG</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">70.30</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.84%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">16</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-19 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">ETP</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">67.79</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.79%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">15</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-19 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">GUC</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">71.80</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:gray;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.37%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;"> 7</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-19 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">JBI</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">83.25</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:gray;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.42%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;"> 8</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-05 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">JCB</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">93.10</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.58%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">11</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-19 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">JLM</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">76.12</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:gray;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.47%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;"> 9</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-19 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">JUI</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">66.68</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.63%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">12</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-19 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">MAB</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">66.74</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:gray;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.42%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;"> 8</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-01-15 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">MIG</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">102.95</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:gray;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.21%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;"> 4</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-01-08 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">NIR</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">74.05</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.63%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">12</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-19 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">REN</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">69.90</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.58%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">11</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-02-26 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">SEH</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">79.88</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.63%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">12</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-02-26 </span></div>
+									</td>
+							</tr>
+							<tr>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:left;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">TIB</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">73.84</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:blue;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">0.53%</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:right;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">10</span></div>
+									</td>
+									<td style="border-bottom-color:black;border-bottom-style:solid;border-bottom-width:1px;border-left-color:black;border-left-style:solid;border-left-width:1px;border-top-color:black;border-top-style:solid;border-top-width:1px;border-right-color:black;border-right-style:solid;border-right-width:1px;vertical-align:middle;padding-bottom:2px;padding-top:2px;padding-left:2px;padding-right:2px;">
+										<div style="text-align:center;padding-bottom:1px;padding-top:1px;padding-left:1px;padding-right:1px;"><span style="color:black;font-size:10px;font-weight:normal;font-style:normal;font-family:Arial;">2013-03-05 </span></div>
+									</td>
+							</tr>
+						</tbody>
+						
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
+	
+	</div><!-- /.row -->
+
+</div><!-- /.container -->
+
+
+<script type="text/javascript">
+    $(document).ready( function(){ 
+   		setTimeout(function () {
+   			  $('.bs-docs-sidenav').affix({
+   				offset: {
+   				  top: function () { return $(window).width() <= 980 ? 0 : 20 }
+   				, bottom: 270
+   				}
+   			  });
+   			  
+   			  $('body').scrollspy('refresh');
+   			}, 100)	;
+
+    }) ;
+</script>
+
+</body>
+</html>
