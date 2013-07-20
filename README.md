@@ -71,7 +71,6 @@ To add R outputs (or replace text) in a docx document, use one of these function
 * 'addTOC' for adding tables of contents.
 * 'addPageBreak' for adding a page break.
 * 'addLineBreak' for adding a line break.
-* 'replaceText' for text replacement.
 
 To write the docx document on to the disk:
 
