@@ -1,12 +1,12 @@
 \name{addLineBreak-methods}
+\alias{addLineBreak}
 \docType{methods}
-\alias{addLineBreak-methods}
 \title{Insert a page break into the docx document}
 \description{
 Insert a line break into the \code{\linkS4class{Docx}} object.
 }
 \usage{
-  \S4method{addLineBreak}{Docx}(x)
+  addLineBreak(x)
 }
 \arguments{
   \item{x}{the \code{\linkS4class{Docx}} to use}

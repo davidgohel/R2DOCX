@@ -9,20 +9,21 @@ Insert a table into a \code{\linkS4class{Docx} object}.
 }
 
 \usage{
-  \S4method{addTable}{Docx, data.frame, tableProperties, list, list, integer, character, list, list}(x, data, formats, header.labels, grouped.cols, span.columns=character(0), col.types, col.colors, col.fontcolors)
+  \S4method{addTable}{Docx, data.frame, tableProperties, list, list, integer, character, list, list, character}(x, data, formats, header.labels, grouped.cols, span.columns=character(0), col.types, col.colors, col.fontcolors, bookmark)
 }
 
 
 \arguments{
   \item{x}{the \code{\linkS4class{Docx}} to use}
   \item{data}{\code{data.frame} to add}
-  \item{formats}{a \code{\linkS4class{tableProperties} object} that specify styles to use to format the table.}
-  \item{header.labels}{a named list whose elements define labels to display in table headers instead of colnames.}
-  \item{grouped.cols}{a named list whose elements define which columns are to be grouped in an upper header row (grouped header).}
-  \item{span.columns}{a character vector of columns names where row merging is to be done.}
-  \item{col.types}{Defines the formating style of columns}
-  \item{col.colors}{Defines the background color of cells}
-  \item{col.fontcolors}{Defines the font color of cells}
+  \item{formats}{a \code{\linkS4class{tableProperties} object} that specify styles to use to format the table. optional}
+  \item{header.labels}{a named list whose elements define labels to display in table headers instead of colnames. optional}
+  \item{grouped.cols}{a named list whose elements define which columns are to be grouped in an upper header row (grouped header). optional}
+  \item{span.columns}{a character vector of columns names where row merging is to be done. optional}
+  \item{col.types}{Defines the formating style of columns. optional}
+  \item{col.colors}{Defines the background color of cells. optional}
+  \item{col.fontcolors}{Defines the font color of cells. optional}
+  \item{bookmark}{a character value ; id of the Word bookmark to replace by the table. optional}
 }
 
 \details{
@@ -94,8 +95,10 @@ data[2,1]| data[2,2]| data[2,3]| data[2,2]|
 		This argument is optional.
 		}
 
-
-
+\item \code{bookmark} : {a character vector specifying bookmark id to replace by the table. 
+		If provided, table will replace the paragraph that contains the bookmark. 
+		If not provided, table will be added at the end of the document.
+		}
 
 }
 

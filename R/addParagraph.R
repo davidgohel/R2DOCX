@@ -5,7 +5,7 @@
 # Version: 0.1
 ###############################################################################
 
-setMethod("addParagraph", "Docx", function(x, value, stylename, replacements, replacement.styles, ... ) {
+setMethod("addParagraph", "Docx", function(x, value, stylename, replacements, replacement.styles, bookmark, ... ) {
 	if( missing( stylename )) {
 		stop("argument 'stylename' is missing")
 	} else if( !is.element( stylename , styles( x ) ) ){
@@ -18,37 +18,34 @@ setMethod("addParagraph", "Docx", function(x, value, stylename, replacements, re
 		stop("argument 'replacement.styles' is missing while argument 'replacement' has been supplied")
 	}
 	for( text.value in value ){
-		.jcall( x@obj, "V", "initParagraphTemplate" )
+		paragrah = .jnew("com/lysis/docx4r/elements/Paragraph", text.value  )
+		
 		if( !missing( replacements ) ){
-#			pattern <- "\\[{1}[a-zA-z]+\\]{1}"#any '[a least a letter and no space]'
-#			m = unlist( regmatches(text.value, gregexpr( pattern, text.value ) ) )
-#			
-#			if( !all( is.element( paste( "[", names(replacements), "]", sep = "" ), m )  ) ){
-#				stop("Some of the replacement cannot be found in the parameter 'value'.")
-#			}
-#			if( !all( is.element( m, paste( "[", names(replacements), "]", sep = "" ) )  ) ){
-#				warning("Replacements seem to be missing in the parameter 'replacements'.")
-#			}
+
 	
 			# loop over each replacement
 			for( j in names( replacements ) ){
 				fs = replacement.styles[[j]]@properties["font-size"]
 				fs = as.integer( gsub( "px", "", fs ) )
-				
-				.jcall( x@obj, "V", "addParagraphTemplateReplacement"
+				.jcall( paragrah, "V", "addReplacement"
 						, paste("[", j, "]", sep = "" )#keys
 						, replacements[[j]] #value
 						, fs #font-size
-						, replacement.styles[[j]]@properties["font-weight"]
-						, replacement.styles[[j]]@properties["font-style"]
+						, replacement.styles[[j]]@properties["font-weight"]=="bold"
+						, replacement.styles[[j]]@properties["font-style"]=="italic"
 						, replacement.styles[[j]]@properties["color"]
 						, replacement.styles[[j]]@properties["font-family"]
 				)
 			}
 		}
-	
-		.jcall( x@obj, "V", "addParagraphTemplate" , text.value, stylename)
+		if( missing( bookmark ) )
+			.jcall( x@obj, "V", "add" , paragrah, stylename)
+		else .jcall( x@obj, "V", "insert", bookmark, paragrah, stylename )
+
 	}
+	if( !missing( bookmark ) )
+		.jcall( x@obj, "V", "deleteBookmark", bookmark )
+	
 	x
 })
 

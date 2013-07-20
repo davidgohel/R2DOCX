@@ -1,8 +1,8 @@
 Package: R2DOCX
 Type: Package
 Title: Create MS docx documents from R
-Version: 0.4
-Date: 2013-06-06
+Version: 0.5
+Date: 2013-07-19
 Author: David Gohel <david.gohel@gmail.com>
 Maintainer: David Gohel <david.gohel@gmail.com>
 Description: Create MS DOCX documents from R.

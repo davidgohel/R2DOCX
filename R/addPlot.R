@@ -9,7 +9,9 @@ setMethod("addPlot", "Docx", function(doc, fun
 		, legend, stylename = "PlotReference"
 		, width = 7, height = 6
 		, pointsize = 12
-		, visible = T, ... ) {
+		, visible = T
+		, bookmark 
+		, ... ) {
 			if( !missing( legend) && legend != "" ){
 				# check style does exist
 				if( !is.element( stylename , styles( doc ) ) )
@@ -30,11 +32,12 @@ setMethod("addPlot", "Docx", function(doc, fun
 			dev.off()
 
 			plotfiles = list.files( dirname , full.names = T )
+						
+			# Send the graph to java that will 'encode64ize' and place it in a docx4J object
+			if( missing( bookmark ) )
+				.jcall( doc@obj, "V", "addImage", .jarray( plotfiles ) )
+			else .jcall( doc@obj, "V", "insertImage", bookmark, .jarray( plotfiles ) )
 			
-			
-			for( i in plotfiles )
-			# Send the graph to java that will 'encode64' and place it in a docx4J object
-				.jcall( doc@obj, "V", "addImage", i )
 
 			# Finally, add the legend of the Graph after the Drawing
 			if( !missing( legend) && legend != "" ) addParagraph( doc, value = legend, stylename = stylename )

@@ -2,6 +2,6 @@ R2DOCX	Complete example
 addParagraph	Add a paragraph in a docx document
 addPlot	Add a plot in an docx document
 addTable	Add a table in an docx document
-replaceText	Replace text in an docx document
 tableStyle	Demonstrates styles management
 titles	Demonstrates titles and tables of content
+bookmark	Demonstrates how to use bookmark argument

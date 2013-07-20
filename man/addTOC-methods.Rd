@@ -1,9 +1,9 @@
 \name{addTOC-methods}
 \docType{methods}
 \alias{addTOC-methods}
-\title{Insert a plot into the docx document}
+\title{Insert a table of contents into the docx document}
 \description{
-Insert a plot into the \code{\linkS4class{Docx}} object.
+Insert a table of contents into the \code{\linkS4class{Docx}} object.
 }
 \usage{
   \S4method{addTOC}{Docx,character}(x, stylename)

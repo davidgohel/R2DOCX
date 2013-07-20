@@ -6,7 +6,7 @@
 Insert a plot into the \code{\linkS4class{Docx}} object.
 }
 \usage{
-  \S4method{addPlot}{Docx,function,numeric,numeric,character,character,ANY}(x, fun, width, height, legend, stylename,...)
+  \S4method{addPlot}{Docx,function,numeric,numeric,character,character,character,ANY}(doc, fun, width, height, legend, stylename, bookmark, ...)
 }
 \arguments{
   \item{doc}{the \code{\linkS4class{Docx}} to use}
@@ -16,6 +16,7 @@ Insert a plot into the \code{\linkS4class{Docx}} object.
   \item{legend}{optional character string, legend to add below the plot}
   \item{stylename}{name of the style to apply to the legend text 
   (default value is "PlotReference" - a style available in the default base document.).}
+  \item{bookmark}{a character value ; id of the Word bookmark to replace by the plot. optional}
   \item{...}{arguments for \code{fun}.}
 }
 \details{
@@ -25,6 +26,17 @@ the plot code into a function whose parameters will be specified as '...'.
 
 If you want to add ggplot2 or lattice plot, use 
 \code{print} function. See examples for more details.
+
+\itemize{
+\item \code{bookmark} : {a character vector specifying bookmark id to replace by the table. 
+		If provided, table will replace the paragraph that contains the bookmark. 
+		If not provided, table will be added at the end of the document.
+		}
+
+}
+
+
+
 }
 \examples{
 docx.file = "Hello_Word.docx"

@@ -5,8 +5,6 @@
 # Version: 0.1
 ###############################################################################
 .onLoad= function(libname, pkgname){
-#	if( is.null( options( "java.parameters" )$java.parameters ) )
-#		options( java.parameters = c("-Xmx512M", "-Xms128M", "-Xss512K") )
 	.jpackage( pkgname, lib.loc = libname )
 	invisible()
 }
@@ -26,6 +24,7 @@
 			rwhatobject = paste( what, ".text", sep = "" )
 			str = paste( "x@", rwhatobject , sep = "" )
 			robject = eval( parse ( text = str ) )
+
 			.jcall( obj, "V", jwhatmethod, as.character(robject@properties["color"])
 					, as.integer(gsub("px$", "", robject@properties["font-size"]))
 					, as.logical(robject@properties["font-weight"]=="bold")
@@ -56,7 +55,7 @@
 			rwhatobject = paste( what, ".cell", sep = "" )
 			str = paste( "x@", rwhatobject , sep = "" )
 			robject = eval( parse ( text = str ) )
-
+			#setHeaderCell, setGroupedHeaderCell, ...
 			.jcall( obj, "V", jwhatmethod
 					, as.character( robject@properties["border-bottom-color"] )
 					, as.character( robject@properties["border-bottom-style"] )
@@ -75,6 +74,7 @@
 					, as.integer( gsub("px$", "", robject@properties["padding-top"] ) )
 					, as.integer( gsub("px$", "", robject@properties["padding-left"] ) )
 					, as.integer( gsub("px$", "", robject@properties["padding-right"] ) )
+					, as.character( robject@properties["background-color"] )
 			)
 			
 		}

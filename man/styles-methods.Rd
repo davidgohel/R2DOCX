@@ -6,7 +6,7 @@
 Get styles names that exist into the template (base document).
 }
 \usage{
-  \S4method{styles}{Docx}(x)
+  \S4method{styles}{Docx, ANY}(x,...)
 }
 \arguments{
   \item{x}{the \code{\linkS4class{Docx}} to use}

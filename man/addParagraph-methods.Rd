@@ -9,7 +9,7 @@ Insert a paragraph of text into a \code{\linkS4class{Docx} object}.
 }
 
 \usage{
-  \S4method{addParagraph}{Docx, character, character, list, list}(x, value, stylename, replacements, replacement.styles)
+  \S4method{addParagraph}{Docx, character, character, list, list, character}(x, value, stylename, replacements, replacement.styles, bookmark)
 }
 
 
@@ -19,6 +19,7 @@ Insert a paragraph of text into a \code{\linkS4class{Docx} object}.
   \item{stylename}{value of the named style in the docx document.}
   \item{replacements}{optional, a named list whose elements define replacements values.}
   \item{replacement.styles}{optional, a named list specifying formats to apply to replacements.}
+  \item{bookmark}{a character value ; id of the Word bookmark to replace by the table. optional}
 }
 
 \details{
@@ -43,6 +44,11 @@ Insert a paragraph of text into a \code{\linkS4class{Docx} object}.
 		list( animal = "donkey" , food = "grass" )}\cr\code{, replacement.styles = 
 		list( animal= textProperties(color="red" ) , food= textProperties(color="blue" ) )
 		}\cr
+		}
+
+\item \code{bookmark} : {a character vector specifying bookmark id to replace by the table. 
+		If provided, table will replace the paragraph that contains the bookmark. 
+		If not provided, table will be added at the end of the document.
 		}
 
 }
@@ -72,6 +78,8 @@ doc <- addParagraph( doc, value = x, stylename = "Normal"
 		, replacements = repl
 		, replacement.styles = repl.styles
 )
+doc <- addParagraph( doc, value = letters[1:10], stylename = "BulletList")
+
 \dontrun{
 writeDoc( doc, "Paragraph_example.docx" )
 }

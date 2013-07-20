@@ -52,6 +52,7 @@ doc <- addParagraph( doc, value = x, stylename = "Normal"
 		, replacements = repl
 		, replacement.styles = repl.styles
 )
+doc <- addParagraph( doc, value = letters[1:10], stylename = "BulletList")
 
 writeDoc( doc, docx.file )
 
