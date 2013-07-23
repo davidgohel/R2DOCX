@@ -27,6 +27,10 @@ From an R console (R >= 3.0):
     R packages : rJava
 	Java (it has been tested with java version >= 1.6)
 	
+Documentation
+-------------
+[R2DOCX](http://davidgohel.github.io/R2DOCX/index.html)
+
 Getting Started
 ---------------
 
@@ -50,10 +54,6 @@ Creating Microsoft Word documents is easy and can be done in few lines of R code
     # write the doc 
     writeDoc( doc, docx.file )
 
-
-Documentation
--------------
-[R2DOCX](http://davidgohel.github.io/R2DOCX/index.html)
 
 License
 -------
