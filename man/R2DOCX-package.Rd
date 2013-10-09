@@ -18,8 +18,8 @@ Enable R to add content into a Word 2007 document - available elements are:
 \tabular{ll}{
 Package: \tab R2DOCX\cr
 Type: \tab Package\cr
-Version: \tab 0.3\cr
-Date: \tab 2013-06-06\cr
+Version: \tab 0.6\cr
+Date: \tab 2013-10-07\cr
 License: \tab GPL-3
 }
 
@@ -34,8 +34,8 @@ License: \tab GPL-3
 		}
 }
 \author{
-Author: David Gohel <\email{david.gohel@gmail.com}; \email{david.gohel@lysis-consultants.fr}>\cr
-Maintainer: David Gohel <\email{david.gohel@gmail.com}; \email{david.gohel@lysis-consultants.fr}>\cr
+Author: David Gohel <\email{david.gohel@lysis-consultants.fr}; \email{david.gohel@gmail.com}>\cr
+Maintainer: David Gohel <\email{david.gohel@lysis-consultants.fr}; \email{david.gohel@gmail.com}>\cr
 }
 \seealso{
 \code{\linkS4class{Docx}}

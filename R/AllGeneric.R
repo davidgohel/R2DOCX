@@ -20,3 +20,6 @@ if(!isGeneric("addPageBreak"))
 if(!isGeneric("addLineBreak"))
 	setGeneric("addLineBreak", function(x, ...) standardGeneric("addLineBreak"));
 
+if(!isGeneric("addImage"))
+	setGeneric("addImage", function(x, ...) standardGeneric("addImage"));
+
