@@ -1,6 +1,9 @@
 R2DOCX
 ======
 R2DOCX is a R package for creating Word docx files (Microsoft Open XML).
+
+Documentation and examples can be found [here](http://davidgohel.github.io/R2DOCX/index.html).
+
 Features
 --------
 * Create docx files with only a few lines of R code. 
@@ -27,10 +30,6 @@ From an R console (R >= 3.0):
     R packages : rJava
 	Java (it has been tested with java version >= 1.6)
 	
-Documentation
--------------
-[R2DOCX](http://davidgohel.github.io/R2DOCX/index.html)
-
 Getting Started
 ---------------
 
