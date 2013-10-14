@@ -65,15 +65,6 @@
 <span class="package">devtools</span><span class="keyword">::</span><span class="functioncall">install_github</span><span class="keyword">(</span><span class="string">'R2DOCX'</span><span class="keyword">,</span> <span class="string">'davidgohel'</span><span class="keyword">)</span>
 </pre>
 					
-					<p><strong>Mac users</strong></p>
-					
-<pre>
-<span class="functioncall">Sys.setenv</span><span class="keyword">(</span><span class="argument">NOAWT</span><span class="argument">=</span><span class="number">1</span><span class="keyword">)</span> <span class="comment">#prevents usage of awt.[http://cran.r-project.org/doc/manuals/r-devel/R-admin.html#Java-_0028OS-X_0029]</span>
-<span class="functioncall">install.packages</span><span class="keyword">(</span><span class="string">"devtools"</span><span class="keyword">)</span>
-<span class="package">devtools</span><span class="keyword">::</span><span class="functioncall">install_github</span><span class="keyword">(</span><span class="string">'R2DOC'</span><span class="keyword">,</span> <span class="string">'davidgohel'</span><span class="keyword">)</span>
-<span class="package">devtools</span><span class="keyword">::</span><span class="functioncall">install_github</span><span class="keyword">(</span><span class="string">'R2DOCX'</span><span class="keyword">,</span> <span class="string">'davidgohel'</span><span class="keyword">)</span>
-</pre>
-					
 					<p><strong>Dependencies</strong></p>
 					
 					<pre>
@@ -89,6 +80,7 @@ Java (it has been tested with java version &gt;= 1.6)
 					<p>Creating Microsoft Word documents is easy and can be done in few lines of R code. Below a commented R script:</p>
 
 <pre>
+<span class="functioncall">library</span><span class="keyword">(</span> <span class="symbol">R2DOCX</span> <span class="keyword">)</span>
 <span class="comment"># Here we define word document filename to write</span>
 <span class="symbol">docx.file</span> <span class="assignement">=</span> <span class="string">"document.docx"</span>
 <span class="comment"># Creation of doc, a Docx object</span>
