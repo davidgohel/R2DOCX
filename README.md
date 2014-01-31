@@ -2,6 +2,8 @@
 
 R2DOCX development activity has shifted to [`ReporteRs`](https://github.com/davidgohel/ReporteRs).
 
+**ReporteRs** generate Word, PowerPoint and html files. R2DOCX functions have been improved in ReporteRs package. 
+
 R2DOCX
 ======
 R2DOCX is a R package for creating Word docx files (Microsoft Open XML).
